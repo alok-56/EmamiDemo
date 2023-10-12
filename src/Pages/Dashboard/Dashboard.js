@@ -132,7 +132,7 @@ const Dashboard = () => {
                         marginLeft: 5,
                       }}
                     >
-                      Alok Kumar
+                     Emami Product
                     </p>
                     <p
                       style={{
