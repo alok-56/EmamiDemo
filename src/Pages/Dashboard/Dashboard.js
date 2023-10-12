@@ -33,10 +33,8 @@ const Dashboard = () => {
   const ChartType = [pieimg, barimg, Lineimg, Tableimg, exportimg];
   const DayType = ["Date", "Week", "Month"];
 
-  const navigate=useNavigate();
-  const LogoutUser=()=>[
-    navigate("/")
-  ]
+  const navigate = useNavigate();
+  const LogoutUser = () => [navigate("/")];
 
   return (
     <div className="head">
@@ -47,8 +45,8 @@ const Dashboard = () => {
               style={{
                 height: "100vh",
                 position: "fixed",
-                width: 200,
-                marginLeft: "-14px",
+                width:200,
+                marginLeft:-12,
                 backgroundColor: "rgba(29, 29, 65, 1)",
               }}
             >
