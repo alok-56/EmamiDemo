@@ -54,7 +54,7 @@ export function Lines(props) {
       {
         fill: true,
         data: props.data,
-        borderColor: "rgb(53, 162, 235)",
+        borderColor: "rgba(99, 89, 233, 1)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",
         pointBorderColor: "rgba(99, 89, 233, 1)",
         pointBackgroundColor: "rgba(99, 89, 233, 1)",
