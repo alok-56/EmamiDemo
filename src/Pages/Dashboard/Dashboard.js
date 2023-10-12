@@ -40,13 +40,12 @@ const Dashboard = () => {
     <div className="head">
       <div className="container-fluid">
         <div className="row">
-          <div className="col-lg-2 col-md-2 d-none d-md-none d-lg-block d-sm-none ">
+          <div className="col-lg-2 col-md-2 d-none d-md-none d-lg-block d-sm-none  " style={{
+            marginLeft: 0
+          }}>
             <div
               style={{
                 height: "100vh",
-                position: "fixed",
-                width:200,
-                marginLeft:-12,
                 backgroundColor: "rgba(29, 29, 65, 1)",
               }}
             >
