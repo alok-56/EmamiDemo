@@ -590,7 +590,7 @@ const Dashboard = () => {
                           }}
                           className="mt-1"
                         >
-                          <img
+                          {/* <img
                             style={{ height: 10, width: 15 }}
                             className="mt-2"
                             src={Scanicon}
@@ -605,7 +605,7 @@ const Dashboard = () => {
                             }}
                           >
                             Browsers
-                          </p>
+                          </p> */}
                         </div>
                       </div>
                     </div>
