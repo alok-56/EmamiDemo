@@ -1,0 +1,15 @@
+.head1 {
+  display: block;
+}
+.logo {
+  display: none;
+}
+
+@media screen and (max-width: 980px) {
+  .head1 {
+    display: none;
+  }
+  .logo {
+    display: block;
+  }
+}
