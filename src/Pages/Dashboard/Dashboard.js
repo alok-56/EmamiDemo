@@ -45,7 +45,7 @@ const Dashboard = () => {
             <div
               style={{
                 height: "100vh",
-                position:"fixed",
+                padding:10,
                 backgroundColor: "rgba(29, 29, 65, 1)",
               }}
             >
