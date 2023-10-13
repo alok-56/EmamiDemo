@@ -37,16 +37,18 @@ const Dashboard = () => {
   const LogoutUser = () => [navigate("/")];
 
   return (
-    <div className="head">
-      <div className="container-fluid">
+    <div className="head" style={{height:"890px", backgroundColor: "rgba(29, 29, 65, 1)" }} >
+      <div
+        className="container-fluid"
+      >
         <div className="row ">
-          <div className="col-lg-2 col-md-2 d-none d-md-none d-lg-block d-sm-none" style={{height:"100vh"}} >
+          <div className="col-lg-2 col-md-2 d-none d-md-none d-lg-block d-sm-none" >
             <div
               style={{
                 height: "100vh",
-                position:"static",
-                position:"fixed",
-                padding:13,
+                position: "static",
+                position: "fixed",
+                padding: 13,
                 backgroundColor: "rgba(29, 29, 65, 1)",
               }}
             >
@@ -1034,9 +1036,8 @@ const Dashboard = () => {
                           marginTop: 0,
                         }}
                       >
-                       
-                          <PieChart data={[10, 20]}></PieChart>
-                       
+                        <PieChart data={[10, 20]}></PieChart>
+
                         <div
                           style={{
                             display: "flex",
