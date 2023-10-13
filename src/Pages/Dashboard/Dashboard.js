@@ -196,8 +196,8 @@ const Dashboard = () => {
                     <div className="col-lg-3 col-md-4 col-sm-6 col-6 ">
                       <Form.Control
                         style={{
-                          backgroundColor: "rgba(20, 19, 50, 1)",
-                          color: "#fff",
+                          backgroundColor: "#fff",
+                          color: "#000",
                           width: 180,
                         }}
                         placeholder="Select QR Code"
@@ -222,11 +222,12 @@ const Dashboard = () => {
                     <div className="col-lg-3 col-md-4 col-sm-6 col-6 mt-lg-0 mt-md-0 mt-sm-3 mt-3">
                       <RangePicker
                         style={{
-                          backgroundColor: "rgba(20, 19, 50, 1)",
-                          width: 180,
+                          backgroundColor: "#fff",
+                          width: 210,
                           padding: 6,
+                          
                         }}
-                        rang
+                        className="white-text" 
                       ></RangePicker>
                     </div>
                     <div className="col-lg-3 col-md-12 col-sm-6 col-6 mt-lg-0 mt-md-4 mt-sm-3 mt-3 text-md-center">
