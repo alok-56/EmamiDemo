@@ -577,7 +577,7 @@ const Dashboard = () => {
                         ) : select1 === 3 ? (
                           <div
                             style={{
-                              marginTop: -50,
+                              marginTop: -35,
                             }}
                           >
                             <TextChart></TextChart>
@@ -586,7 +586,9 @@ const Dashboard = () => {
                           <Lines data={[19, 60, 100, 40]}></Lines>
                         )}
 
-                        {select1 === 1 || select1 === 2 ? null : (
+                        {select1 === 1 ||
+                        select1 === 2 ||
+                        select1 === 3 ? null : (
                           <div
                             style={{
                               display: "flex",
@@ -943,30 +945,35 @@ const Dashboard = () => {
                           <Lines data={[19, 60, 100, 40]}></Lines>
                         )}
 
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "center",
-                          }}
-                          className="mt-1"
-                        >
-                          <img
-                            style={{ height: 10, width: 15 }}
-                            className="mt-2"
-                            src={Scanicon}
-                          ></img>
-                          <p
-                            className="mt-1"
+                        {select3 === 1 ||
+                        select3 === 2 ||
+                        select3 === 3 ? null : (
+                          <div
                             style={{
-                              color: "rgba(150, 165, 184, 1)",
-                              marginLeft: 10,
-                              fontSize: 12,
-                              fontWeight: "bold",
+                              display: "flex",
+                              justifyContent: "center",
+                              marginTop: select === 3 ? "30" : null,
                             }}
+                            className="mt-1"
                           >
-                            Browsers
-                          </p>
-                        </div>
+                            <img
+                              style={{ height: 10, width: 15 }}
+                              className="mt-2"
+                              src={Scanicon}
+                            ></img>
+                            <p
+                              className="mt-1"
+                              style={{
+                                color: "rgba(150, 165, 184, 1)",
+                                marginLeft: 10,
+                                fontSize: 12,
+                                fontWeight: "bold",
+                              }}
+                            >
+                              Browsers
+                            </p>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
