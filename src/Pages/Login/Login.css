@@ -1,0 +1,16 @@
+.loginHead {
+  width: 400px;
+  height: 450px;
+  background-color: rgba(29, 29, 65, 1);
+  margin: auto;
+  border-radius: 5;
+}
+
+@media screen and (max-width: 420px) {
+  .loginHead {
+    width: 300px;
+  }
+  input{
+    width: 280px;
+  }
+}

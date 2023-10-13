@@ -35,10 +35,12 @@ const Dashboard = () => {
   const [Dayselect, setDaySelect] = useState(0);
   const ChartType = [pieimg, barimg, Lineimg, Tableimg, exportimg];
   const DayType = ["Date", "Week", "Month"];
+  const [DashBoard, setDashBoard] = useState(false);
 
   const navigate = useNavigate();
   const LogoutUser = () => {
     toast("Logout Successfully");
+    navigate('/')
   };
 
   const db = [{ Name: "alok" }, { Name: "sdjhsj" }];
@@ -64,45 +66,47 @@ const Dashboard = () => {
       <ToastContainer />
       <div className="container-fluid">
         <div className="row ">
-          <div className="col-lg-2 col-md-2 d-none d-md-none d-lg-block d-sm-none">
-            <div
-              style={{
-                height: "100vh",
-                position: "static",
-                position: "fixed",
-                padding: 13,
-                backgroundColor: "rgba(29, 29, 65, 1)",
-              }}
-            >
-              <div className="text-center">
-                <img className="mt-4" style={{ width: 100 }} src={Logo}></img>
-              </div>
-              <div className="text-center">
-                <img
-                  style={{ marginTop: "50px", width: 150 }}
-                  src={Overview}
-                ></img>
-              </div>
-              <div className="text-center" onClick={() => alert("hello")}>
-                <img
-                  style={{ marginTop: "30px", width: 100 }}
-                  src={Analities}
-                ></img>
-              </div>
-              <div className="text-center" onClick={() => LogoutUser()}>
-                <img
-                  style={{
-                    marginTop: "30px",
-                    width: 80,
-                    position: "absolute",
-                    bottom: 30,
-                    left: 40,
-                  }}
-                  src={Logout}
-                ></img>
+         
+            <div className="col-lg-2 col-md-2 d-none d-md-none d-lg-block d-sm-none">
+              <div
+                style={{
+                  height: "100vh",
+                  position: "static",
+                  position: "fixed",
+                  padding: 13,
+                  backgroundColor: "rgba(29, 29, 65, 1)",
+                }}
+              >
+                <div className="text-center">
+                  <img className="mt-4" style={{ width: 100 }} src={Logo}></img>
+                </div>
+                <div className="text-center">
+                  <img
+                    style={{ marginTop: "50px", width: 150 }}
+                    src={Overview}
+                  ></img>
+                </div>
+                <div className="text-center" onClick={() => alert("hello")}>
+                  <img
+                    style={{ marginTop: "30px", width: 100 }}
+                    src={Analities}
+                  ></img>
+                </div>
+                <div className="text-center" onClick={() => LogoutUser()}>
+                  <img
+                    style={{
+                      marginTop: "30px",
+                      width: 80,
+                      position: "absolute",
+                      bottom: 30,
+                      left: 40,
+                    }}
+                    src={Logout}
+                  ></img>
+                </div>
               </div>
             </div>
-          </div>
+       
 
           {/* //-------------------DashBoard Head-------------------------------------// */}
           <div
@@ -119,60 +123,63 @@ const Dashboard = () => {
               }}
               className="mt-3"
             >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
-                <div class="head1">
-                  <h4 style={{ color: "#fff", marginLeft: 0, marginTop: 5 }}>
-                    Dashboard
-                  </h4>
-                </div>
-                <div class="logo">
-                  <img
-                    className="img-fluid"
-                    style={{
-                      color: "#fff",
-                      marginLeft: 0,
-                      marginTop: 1,
-                      height: 30,
-                    }}
-                    src={Logo}
-                  ></img>
-                </div>
+              {DashBoard ? null : (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <div class="head1">
+                    <h4 style={{ color: "#fff", marginLeft: 0, marginTop: 5 }}>
+                      Dashboard
+                    </h4>
+                  </div>
+                  <div class="logo">
+                    <img
+                      className="img-fluid"
+                      style={{
+                        color: "#fff",
+                        marginLeft: 0,
+                        marginTop: 1,
+                        height: 30,
+                      }}
+                      src={Logo}
+                    ></img>
+                  </div>
 
-                <div style={{ marginRight: 30, display: "flex" }}>
-                  <img
-                    src={Profile}
-                    style={{ height: 40, width: 40, borderRadius: 50 }}
-                  ></img>
-                  <div className="mt-1">
-                    <p
-                      style={{
-                        color: "#fff",
-                        fontWeight: 500,
-                        fontSize: 10,
-                        marginLeft: 5,
-                      }}
-                    >
-                      Emami Kumar
-                    </p>
-                    <p
-                      style={{
-                        color: "#fff",
-                        fontWeight: 500,
-                        fontSize: 10,
-                        marginLeft: 5,
-                        marginTop: -18,
-                      }}
-                    >
-                      Director
-                    </p>
+                  <div style={{ marginRight: 30, display: "flex" }}>
+                    <img
+                      src={Profile}
+                      style={{ height: 40, width: 40, borderRadius: 50 }}
+                    ></img>
+                    <div className="mt-1">
+                      <p
+                        style={{
+                          color: "#fff",
+                          fontWeight: 500,
+                          fontSize: 10,
+                          marginLeft: 5,
+                        }}
+                      >
+                        Emami Kumar
+                      </p>
+                      <p
+                        style={{
+                          color: "#fff",
+                          fontWeight: 500,
+                          fontSize: 10,
+                          marginLeft: 5,
+                          marginTop: -18,
+                        }}
+                      >
+                        Director
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
+
               {/* ------------------------------Head End-------------------------------------- */}
 
               {/* ------------------------------Divider start-------------------------------------- */}
