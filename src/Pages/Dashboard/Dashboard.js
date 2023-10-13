@@ -22,6 +22,8 @@ import { BarChart } from "../../Charts/Bar";
 import TextChart from "../../Charts/Text";
 import { useNavigate } from "react-router-dom";
 import * as XLSX from "xlsx";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const { RangePicker } = DatePicker;
 
@@ -35,11 +37,18 @@ const Dashboard = () => {
   const DayType = ["Date", "Week", "Month"];
 
   const navigate = useNavigate();
-  const LogoutUser = () => [navigate("/")];
+  const LogoutUser = () => {
+    toast("Logout Successfully");
+  };
 
   const db = [{ Name: "alok" }, { Name: "sdjhsj" }];
 
-  const handleExport = () => {
+  const handleExport = (index) => {
+    setselect(0);
+    setselect1(1);
+    setselect2(2);
+    setselect3(3);
+    toast("Exported Data Successfully");
     var wb = XLSX.utils.book_new(),
       ws = XLSX.utils.json_to_sheet(db);
     XLSX.utils.book_append_sheet(wb, ws, "MySheet1");
@@ -52,6 +61,7 @@ const Dashboard = () => {
       className="head"
       style={{ height: "890px", backgroundColor: "rgba(29, 29, 65, 1)" }}
     >
+      <ToastContainer />
       <div className="container-fluid">
         <div className="row ">
           <div className="col-lg-2 col-md-2 d-none d-md-none d-lg-block d-sm-none">
@@ -443,7 +453,7 @@ const Dashboard = () => {
                         ) : select === 3 ? (
                           <TextChart></TextChart>
                         ) : (
-                          handleExport()
+                          handleExport(select)
                         )}
 
                         {select === 3 ? null : (
@@ -1026,19 +1036,19 @@ const Dashboard = () => {
                         >
                           {/* //--------------------------------Change Graphs--------------------------------// */}
                           <div
-                          // style={{
-                          //   display: "flex",
-                          //   justifyContent: "space-evenly",
-                          //   border: "1px solid rgba(174, 171, 216, 1)",
-                          //   height: 30,
-                          //   fontSize: 10,
-                          //   width: 60,
-                          //   marginTop: 5,
-                          //   borderRadius: 5,
-                          //   marginLeft: 10,
+                            // style={{
+                            //   display: "flex",
+                            //   justifyContent: "space-evenly",
+                            //   border: "1px solid rgba(174, 171, 216, 1)",
+                            //   height: 30,
+                            //   fontSize: 10,
+                            //   width: 60,
+                            //   marginTop: 5,
+                            //   borderRadius: 5,
+                            //   marginLeft: 10,
 
-                          // }}
-                          class="export"
+                            // }}
+                            class="export"
                           >
                             <img
                               style={{
@@ -1048,7 +1058,6 @@ const Dashboard = () => {
                                 cursor: "pointer",
                               }}
                               src={ExportAll}
-                             
                               onClick={() => handleExport()}
                             ></img>
                           </div>
