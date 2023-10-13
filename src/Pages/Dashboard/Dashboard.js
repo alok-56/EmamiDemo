@@ -40,7 +40,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const LogoutUser = () => {
     toast("Logout Successfully");
-    navigate('/')
+    navigate("/");
   };
 
   const db = [{ Name: "alok" }, { Name: "sdjhsj" }];
@@ -61,58 +61,57 @@ const Dashboard = () => {
   return (
     <div
       className="head"
-      style={{ height: "890px", backgroundColor: "rgba(29, 29, 65, 1)" }}
+      style={{ height: "1030px", backgroundColor: "rgba(29, 29, 65, 1)" }}
     >
       <ToastContainer />
       <div className="container-fluid">
         <div className="row ">
-         
-            <div className="col-lg-2 col-md-2 d-none d-md-none d-lg-block d-sm-none">
-              <div
-                style={{
-                  height: "100vh",
-                  position: "static",
-                  position: "fixed",
-                  padding: 13,
-                  backgroundColor: "rgba(29, 29, 65, 1)",
-                }}
-              >
-                <div className="text-center">
-                  <img className="mt-4" style={{ width: 100 }} src={Logo}></img>
-                </div>
-                <div className="text-center">
-                  <img
-                    style={{ marginTop: "50px", width: 150 }}
-                    src={Overview}
-                  ></img>
-                </div>
-                <div className="text-center" onClick={() => alert("hello")}>
-                  <img
-                    style={{ marginTop: "30px", width: 100 }}
-                    src={Analities}
-                  ></img>
-                </div>
-                <div className="text-center" onClick={() => LogoutUser()}>
-                  <img
-                    style={{
-                      marginTop: "30px",
-                      width: 80,
-                      position: "absolute",
-                      bottom: 30,
-                      left: 40,
-                    }}
-                    src={Logout}
-                  ></img>
-                </div>
+          <div className="col-lg-2 col-md-2 d-none d-md-none d-lg-block d-sm-none">
+            <div
+              style={{
+                height: "100vh",
+                position: "static",
+                position: "fixed",
+                padding: 13,
+                backgroundColor: "rgba(29, 29, 65, 1)",
+              }}
+            >
+              <div className="text-center">
+                <img className="mt-4" style={{ width: 100 }} src={Logo}></img>
+              </div>
+              <div className="text-center">
+                <img
+                  style={{ marginTop: "50px", width: 150 }}
+                  src={Overview}
+                ></img>
+              </div>
+              <div className="text-center" onClick={() => alert("hello")}>
+                <img
+                  style={{ marginTop: "30px", width: 100 }}
+                  src={Analities}
+                ></img>
+              </div>
+              <div className="text-center" onClick={() => LogoutUser()}>
+                <img
+                  style={{
+                    marginTop: "30px",
+                    width: 80,
+                    position: "absolute",
+                    bottom: 30,
+                    left: 40,
+                  }}
+                  src={Logout}
+                ></img>
               </div>
             </div>
-       
+          </div>
 
           {/* //-------------------DashBoard Head-------------------------------------// */}
           <div
             style={{
               height: "100vh",
               backgroundColor: "rgba(20, 19, 50, 1)",
+              
             }}
             className="col-lg-10 col-md-12 col-sm-12 col-12"
           >
@@ -219,14 +218,14 @@ const Dashboard = () => {
                 </div>
 
                 {/* ----------------------------Input Box---------------------------- */}
-                <div className="mt-4" style={{ width: "100%" }}>
+                <div className="mt-4" style={{ width: "80%" }}>
                   <div className="row ">
                     <div className="col-lg-3 col-md-4 col-sm-6 col-6 ">
                       <Form.Control
                         style={{
                           backgroundColor: "#fff",
                           color: "#000",
-                          width: 180,
+                          width: "100%",
                         }}
                         placeholder="Select QR Code"
                       />
@@ -237,7 +236,7 @@ const Dashboard = () => {
                         style={{
                           backgroundColor: "rgba(20, 19, 50, 1)",
                           color: "#fff",
-                          width: 180,
+                          width: "100%",
                         }}
                         aria-label="Default select example"
                       >
@@ -251,14 +250,14 @@ const Dashboard = () => {
                       <RangePicker
                         style={{
                           backgroundColor: "#fff",
-                          width: 210,
+                          width: "100%",
                           padding: 6,
                         }}
                         className="white-text"
                       ></RangePicker>
                     </div>
                     <div className="col-lg-3 col-md-12 col-sm-6 col-6 mt-lg-0 mt-md-4 mt-sm-3 mt-3 text-md-center">
-                      <p style={{ width: 180 }} className="btn btn-primary">
+                      <p style={{ width: "100%" }} className="btn btn-primary">
                         Get Analytics
                       </p>
                     </div>
@@ -322,15 +321,18 @@ const Dashboard = () => {
                     <div
                       style={{
                         width: "100%",
-                        height: 275,
+                        height: "100%",
                         backgroundColor: "rgba(29, 29, 65, 1)",
                         borderRadius: 5,
+                        padding: 10,
                       }}
                     >
                       <div
                         style={{
                           display: "flex",
-                          justifyContent: "space-around",
+                          justifyContent: "space-between",
+                          paddingLeft: 8,
+                          paddingRight: 8,
                         }}
                       >
                         <div>
@@ -447,8 +449,7 @@ const Dashboard = () => {
                       </div>
                       <div
                         style={{
-                          height: 200,
-                          padding: 5,
+                          maxHeight: "100%",
                         }}
                       >
                         {select === 0 ? (
@@ -508,15 +509,18 @@ const Dashboard = () => {
                     <div
                       style={{
                         width: "100%",
+                        height: "100%",
                         backgroundColor: "rgba(29, 29, 65, 1)",
-                        height: 275,
+                        padding: 10,
                         borderRadius: 5,
                       }}
                     >
                       <div
                         style={{
                           display: "flex",
-                          justifyContent: "space-around",
+                          justifyContent: "space-between",
+                          paddingLeft: 5,
+                          paddingRight: 5,
                         }}
                       >
                         <div>
@@ -585,8 +589,7 @@ const Dashboard = () => {
                       </div>
                       <div
                         style={{
-                          height: 200,
-                          padding: 5,
+                          maxHeight: "100%",
                           marginTop: 35,
                         }}
                       >
@@ -653,7 +656,7 @@ const Dashboard = () => {
                       style={{
                         width: "100%",
                         backgroundColor: "rgba(29, 29, 65, 1)",
-                        height: 275,
+                        height: "100%",
                         borderRadius: 5,
                       }}
                     >
@@ -734,11 +737,12 @@ const Dashboard = () => {
 
                   {/* -----------------------------------------------Graph4------------------------------------------------------- */}
 
-                  <div className="col-lg-5 col-md-6 col-sm-12 col-12 mt-3">
+                  <div className="col-lg-5 col-md-6 col-sm-12 col-12 mt-3" style={{marginBottom:20}}>
                     <div
                       style={{
                         width: "100%",
-                        height: 275,
+                        height: "100%",
+                        padding: 10,
                         backgroundColor: "rgba(29, 29, 65, 1)",
                         borderRadius: 5,
                       }}
@@ -746,7 +750,9 @@ const Dashboard = () => {
                       <div
                         style={{
                           display: "flex",
-                          justifyContent: "space-around",
+                          justifyContent: "space-between",
+                          paddingLeft: 8,
+                          paddingRight: 8,
                         }}
                       >
                         <div>
@@ -815,8 +821,7 @@ const Dashboard = () => {
                       </div>
                       <div
                         style={{
-                          height: 200,
-                          padding: 5,
+                          maxHeight: "100%",
                         }}
                       >
                         {select2 === 0 ? (
@@ -870,19 +875,22 @@ const Dashboard = () => {
                   </div>
 
                   {/* -----------------------------------------------Graph5------------------------------------------------------- */}
-                  <div className="col-lg-4 col-md-6 col-sm-12 col-12 mt-sm-2 mt-lg-3 mt-md-0 mt-2">
+                  <div className="col-lg-4 col-md-6 col-sm-12 col-12 mt-sm-2 mt-lg-3 mt-md-0 mt-2" style={{marginBottom:20}}>
                     <div
                       style={{
                         width: "100%",
                         backgroundColor: "rgba(29, 29, 65, 1)",
-                        height: 275,
+                        height: "100%",
                         borderRadius: 5,
+                        padding:10
                       }}
                     >
                       <div
                         style={{
                           display: "flex",
-                          justifyContent: "space-around",
+                          justifyContent: "space-between",
+                          marginLeft: 5,
+                          marginRight: 5,
                         }}
                       >
                         <div>
@@ -951,8 +959,7 @@ const Dashboard = () => {
                       </div>
                       <div
                         style={{
-                          height: 200,
-                          padding: 5,
+                         maxHeight:"100%",
                           marginTop: 35,
                         }}
                       >
@@ -1008,12 +1015,12 @@ const Dashboard = () => {
                   </div>
 
                   {/* -----------------------------------------------Graph6------------------------------------------------------- */}
-                  <div className="col-lg-3 col-md-12 col-sm-12 col-12 mt-sm-2 mt-lg-3 mt-md-2 mt-2">
+                  <div className="col-lg-3 col-md-12 col-sm-12 col-12 mt-sm-2 mt-lg-3 mt-md-2 mt-2" style={{marginBottom:20}}>
                     <div
                       style={{
                         width: "100%",
                         backgroundColor: "rgba(29, 29, 65, 1)",
-                        height: 275,
+                        height: "100%",
                         borderRadius: 5,
                       }}
                     >
