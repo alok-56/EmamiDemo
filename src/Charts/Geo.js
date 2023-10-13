@@ -82,7 +82,7 @@ export function Geo() {
       chartType="GeoChart"
       width="100%"
       height="200px"
-     options={options}
+      options={options}
       data={data}
     />
   );

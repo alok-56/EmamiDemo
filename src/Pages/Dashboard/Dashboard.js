@@ -39,13 +39,14 @@ const Dashboard = () => {
   return (
     <div className="head">
       <div className="container-fluid">
-        <div className="row">
-          <div className="col-lg-2 col-md-2 d-none d-md-none d-lg-block d-sm-none  "
-        >
+        <div className="row ">
+          <div className="col-lg-2 col-md-2 d-none d-md-none d-lg-block d-sm-none" style={{height:"100vh"}} >
             <div
               style={{
                 height: "100vh",
-               padding:10,
+                position:"static",
+                position:"fixed",
+                padding:13,
                 backgroundColor: "rgba(29, 29, 65, 1)",
               }}
             >
@@ -85,7 +86,7 @@ const Dashboard = () => {
               height: "100vh",
               backgroundColor: "rgba(20, 19, 50, 1)",
             }}
-            className="col-lg-10 col-md-12 col-sm-12 col-12 "
+            className="col-lg-10 col-md-12 col-sm-12 col-12"
           >
             <div
               style={{
@@ -132,7 +133,7 @@ const Dashboard = () => {
                         marginLeft: 5,
                       }}
                     >
-                     Emami Product
+                      Emami Kumar
                     </p>
                     <p
                       style={{
@@ -944,7 +945,7 @@ const Dashboard = () => {
                           }}
                           className="mt-1"
                         >
-                          {/* <img
+                          <img
                             style={{ height: 10, width: 15 }}
                             className="mt-2"
                             src={Scanicon}
@@ -959,7 +960,7 @@ const Dashboard = () => {
                             }}
                           >
                             Browsers
-                          </p> */}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -1033,18 +1034,9 @@ const Dashboard = () => {
                           marginTop: 0,
                         }}
                       >
-                        {select === 0 ? (
+                       
                           <PieChart data={[10, 20]}></PieChart>
-                        ) : select === 1 ? (
-                          <Lines data={[12, 40, 80, 90]}></Lines>
-                        ) : select === 2 ? (
-                          <Lines data={[20, 90, 90, 70]}></Lines>
-                        ) : select === 3 ? (
-                          <Lines data={[10, 30, 50, 70]}></Lines>
-                        ) : (
-                          <Lines data={[19, 60, 100, 40]}></Lines>
-                        )}
-
+                       
                         <div
                           style={{
                             display: "flex",

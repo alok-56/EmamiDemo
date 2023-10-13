@@ -5,6 +5,20 @@
   display: none;
 }
 
+.no-gap {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.no-gap .col-2 {
+  padding-right: 0;
+  padding-left: 0;
+}
+.no-gap .col-10{
+  padding-right: 0;
+  padding-left: 0;
+}
+
 @media screen and (max-width: 980px) {
   .head1 {
     display: none;
@@ -13,3 +27,4 @@
     display: block;
   }
 }
+
