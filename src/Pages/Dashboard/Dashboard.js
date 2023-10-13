@@ -37,12 +37,13 @@ const Dashboard = () => {
   const LogoutUser = () => [navigate("/")];
 
   return (
-    <div className="head" style={{height:"890px", backgroundColor: "rgba(29, 29, 65, 1)" }} >
-      <div
-        className="container-fluid"
-      >
+    <div
+      className="head"
+      style={{ height: "890px", backgroundColor: "rgba(29, 29, 65, 1)" }}
+    >
+      <div className="container-fluid">
         <div className="row ">
-          <div className="col-lg-2 col-md-2 d-none d-md-none d-lg-block d-sm-none" >
+          <div className="col-lg-2 col-md-2 d-none d-md-none d-lg-block d-sm-none">
             <div
               style={{
                 height: "100vh",
@@ -585,31 +586,33 @@ const Dashboard = () => {
                           <Lines data={[19, 60, 100, 40]}></Lines>
                         )}
 
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            marginTop: select === 3 ? "30" : null,
-                          }}
-                          className="mt-1"
-                        >
-                          <img
-                            style={{ height: 10, width: 15 }}
-                            className="mt-2"
-                            src={Scanicon}
-                          ></img>
-                          <p
-                            className="mt-1"
+                        {select1 === 1 || select1 === 2 ? null : (
+                          <div
                             style={{
-                              color: "rgba(150, 165, 184, 1)",
-                              marginLeft: 10,
-                              fontSize: 12,
-                              fontWeight: "bold",
+                              display: "flex",
+                              justifyContent: "center",
+                              marginTop: select === 3 ? "30" : null,
                             }}
+                            className="mt-1"
                           >
-                            Browsers
-                          </p>
-                        </div>
+                            <img
+                              style={{ height: 10, width: 15 }}
+                              className="mt-2"
+                              src={Scanicon}
+                            ></img>
+                            <p
+                              className="mt-1"
+                              style={{
+                                color: "rgba(150, 165, 184, 1)",
+                                marginLeft: 10,
+                                fontSize: 12,
+                                fontWeight: "bold",
+                              }}
+                            >
+                              Browsers
+                            </p>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
