@@ -16,11 +16,12 @@ import Tableimg from "../../Images/table.png";
 import Lineimg from "../../Images/Lineimg.png";
 import Scanicon from "../../Images/scansicon.png";
 import ExportAll from "../../Images/exportfull.png";
-import { Geo } from "../../Charts/Geo";
+import { Geo, data } from "../../Charts/Geo";
 import { PieChart } from "../../Charts/PieChart";
 import { BarChart } from "../../Charts/Bar";
 import TextChart from "../../Charts/Text";
 import { useNavigate } from "react-router-dom";
+import * as XLSX from "xlsx";
 
 const { RangePicker } = DatePicker;
 
@@ -35,6 +36,16 @@ const Dashboard = () => {
 
   const navigate = useNavigate();
   const LogoutUser = () => [navigate("/")];
+
+  const db = [{ Name: "alok" }, { Name: "sdjhsj" }];
+
+  const handleExport = () => {
+    var wb = XLSX.utils.book_new(),
+      ws = XLSX.utils.json_to_sheet(db);
+    XLSX.utils.book_append_sheet(wb, ws, "MySheet1");
+
+    XLSX.writeFile(wb, "MyExcel.xlsx");
+  };
 
   return (
     <div
@@ -225,9 +236,8 @@ const Dashboard = () => {
                           backgroundColor: "#fff",
                           width: 210,
                           padding: 6,
-                          
                         }}
-                        className="white-text" 
+                        className="white-text"
                       ></RangePicker>
                     </div>
                     <div className="col-lg-3 col-md-12 col-sm-6 col-6 mt-lg-0 mt-md-4 mt-sm-3 mt-3 text-md-center">
@@ -433,7 +443,7 @@ const Dashboard = () => {
                         ) : select === 3 ? (
                           <TextChart></TextChart>
                         ) : (
-                          <Lines data={[19, 60, 100, 40]}></Lines>
+                          handleExport()
                         )}
 
                         {select === 3 ? null : (
@@ -584,7 +594,7 @@ const Dashboard = () => {
                             <TextChart></TextChart>
                           </div>
                         ) : (
-                          <Lines data={[19, 60, 100, 40]}></Lines>
+                          handleExport()
                         )}
 
                         {select1 === 1 ||
@@ -685,6 +695,7 @@ const Dashboard = () => {
                                 marginTop: 10,
                               }}
                               src={ExportAll}
+                              onClick={() => handleExport()}
                             ></img>
                           </div>
 
@@ -800,7 +811,7 @@ const Dashboard = () => {
                         ) : select2 === 3 ? (
                           <Lines data={[10, 30, 50, 70]}></Lines>
                         ) : (
-                          <Lines data={[19, 60, 100, 40]}></Lines>
+                          handleExport()
                         )}
 
                         <div
@@ -943,7 +954,7 @@ const Dashboard = () => {
                         ) : select3 === 3 ? (
                           <Lines data={[10, 30, 50, 70]}></Lines>
                         ) : (
-                          <Lines data={[19, 60, 100, 40]}></Lines>
+                          handleExport()
                         )}
 
                         {select3 === 1 ||
@@ -1025,15 +1036,20 @@ const Dashboard = () => {
                           //   marginTop: 5,
                           //   borderRadius: 5,
                           //   marginLeft: 10,
+
                           // }}
+                          class="export"
                           >
                             <img
                               style={{
                                 height: 20,
                                 width: 60,
                                 marginTop: 10,
+                                cursor: "pointer",
                               }}
                               src={ExportAll}
+                             
+                              onClick={() => handleExport()}
                             ></img>
                           </div>
 
