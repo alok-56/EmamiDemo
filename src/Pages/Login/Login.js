@@ -188,7 +188,7 @@ const Login = () => {
                   >
                     Dont't have an account yet?
                   </span>
-                  <span style={{ color: "rgba(99, 89, 233, 1)" ,fontSize:"16px",fontWeight:"bold",marginLeft:5}} onClick={()=>navigate('/Signup')}>Sign up</span>
+                  <span style={{ color: "rgba(99, 89, 233, 1)" ,fontSize:"16px",fontWeight:"bold",marginLeft:5,cursor:"pointer"}} onClick={()=>navigate('/Signup')}>Sign up</span>
                 </div>
               </div>
             </div>
