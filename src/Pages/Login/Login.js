@@ -12,7 +12,7 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
   const handleEyeClick = () => {
     setShowPassword((bool) => !bool);
@@ -48,9 +48,7 @@ const Login = () => {
       <div className="container-fluid">
         <div className="row">
           <div className="col-12" style={{ marginTop: 50 }}>
-            <div
-            class="loginHead"
-            >
+            <div class="loginHead">
               <div>
                 <h4
                   style={{
@@ -69,7 +67,7 @@ const Login = () => {
                   width: 300,
                   margin: "auto",
                   marginTop: 30,
-                  padding:10
+                  padding: 10,
                 }}
               >
                 <input
@@ -106,14 +104,26 @@ const Login = () => {
                     }}
                   />
                 </div>
-                <AiFillEye
+                {showPassword ? (
+                  <AiFillEye
+                    style={{
+                      position: "relative",
+                      bottom: 35,
+                      left: 120,
+                    }}
+                    onClick={handleEyeClick}
+                  />
+                ) : (
+                  <AiFillEyeInvisible
                   style={{
                     position: "relative",
                     bottom: 35,
-                    left: 130,
+                    left: 120,
                   }}
-                  onClick={handleEyeClick}
-                />
+                    onClick={handleEyeClick}
+                  />
+                )}
+
                 <p
                   style={{
                     color: "rgba(99, 89, 233, 1)",
@@ -129,7 +139,7 @@ const Login = () => {
                 <p
                   style={{ width: "100%", borderRadius: 5, fontWeight: "bold" }}
                   className="btn btn-primary mt-3"
-                  onClick={()=>navigate('/Dashboard')}
+                  onClick={() => navigate("/Dashboard")}
                 >
                   Log in
                 </p>
@@ -182,13 +192,24 @@ const Login = () => {
                   <span
                     style={{
                       color: "#fff",
-                      fontSize:16,
-                      fontWeight:"400"
+                      fontSize: 16,
+                      fontWeight: "400",
                     }}
                   >
                     Dont't have an account yet?
                   </span>
-                  <span style={{ color: "rgba(99, 89, 233, 1)" ,fontSize:"16px",fontWeight:"bold",marginLeft:5,cursor:"pointer"}} onClick={()=>navigate('/Signup')}>Sign up</span>
+                  <span
+                    style={{
+                      color: "rgba(99, 89, 233, 1)",
+                      fontSize: "16px",
+                      fontWeight: "bold",
+                      marginLeft: 5,
+                      cursor: "pointer",
+                    }}
+                    onClick={() => navigate("/Signup")}
+                  >
+                    Sign up
+                  </span>
                 </div>
               </div>
             </div>

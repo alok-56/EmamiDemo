@@ -16,6 +16,10 @@ import Tableimg from "../../Images/table.png";
 import Lineimg from "../../Images/Lineimg.png";
 import Scanicon from "../../Images/scansicon.png";
 import ExportAll from "../../Images/exportfull.png";
+import LineActive from "../../Images/selectedChart.png";
+import PieActive from "../../Images/pieactive.png";
+import BarActive from "../../Images/baractive.png";
+import Textactive from "../../Images/textactive.png";
 import { Geo, data } from "../../Charts/Geo";
 import { PieChart } from "../../Charts/PieChart";
 import { BarChart } from "../../Charts/Bar";
@@ -24,6 +28,8 @@ import { useNavigate } from "react-router-dom";
 import * as XLSX from "xlsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import moment from "moment/moment";
+import Dropdown from "react-bootstrap/Dropdown";
 
 const { RangePicker } = DatePicker;
 
@@ -34,8 +40,10 @@ const Dashboard = () => {
   const [select3, setselect3] = useState(3);
   const [Dayselect, setDaySelect] = useState(0);
   const ChartType = [pieimg, barimg, Lineimg, Tableimg, exportimg];
+  const ChartActive = [PieActive, BarActive, LineActive, Textactive, exportimg];
   const DayType = ["Date", "Week", "Month"];
   const [DashBoard, setDashBoard] = useState(false);
+  const [date, setDate] = useState([]);
 
   const navigate = useNavigate();
   const LogoutUser = () => {
@@ -43,16 +51,14 @@ const Dashboard = () => {
     navigate("/");
   };
 
-  const db = [{ Name: "alok" }, { Name: "sdjhsj" }];
-
-  const handleExport = (index) => {
+  const handleExport = () => {
     setselect(0);
     setselect1(1);
     setselect2(2);
     setselect3(3);
     toast("Exported Data Successfully");
     var wb = XLSX.utils.book_new(),
-      ws = XLSX.utils.json_to_sheet(db);
+      ws = XLSX.utils.json_to_sheet();
     XLSX.utils.book_append_sheet(wb, ws, "MySheet1");
 
     XLSX.writeFile(wb, "MyExcel.xlsx");
@@ -79,16 +85,17 @@ const Dashboard = () => {
               <div className="text-center">
                 <img className="mt-4" style={{ width: 100 }} src={Logo}></img>
               </div>
-              <div className="text-center">
+              <div className="text-center" onClick={() => setDashBoard(false)}>
                 <img
                   style={{ marginTop: "50px", width: 150 }}
                   src={Overview}
                 ></img>
               </div>
-              <div className="text-center" onClick={() => alert("hello")}>
+              <div className="text-center">
                 <img
                   style={{ marginTop: "30px", width: 100 }}
                   src={Analities}
+                  onClick={() => setDashBoard(true)}
                 ></img>
               </div>
               <div className="text-center" onClick={() => LogoutUser()}>
@@ -111,7 +118,6 @@ const Dashboard = () => {
             style={{
               height: "100vh",
               backgroundColor: "rgba(20, 19, 50, 1)",
-              
             }}
             className="col-lg-10 col-md-12 col-sm-12 col-12"
           >
@@ -147,35 +153,61 @@ const Dashboard = () => {
                     ></img>
                   </div>
 
-                  <div style={{ marginRight: 30, display: "flex" }}>
-                    <img
-                      src={Profile}
-                      style={{ height: 40, width: 40, borderRadius: 50 }}
-                    ></img>
-                    <div className="mt-1">
-                      <p
+                  <Dropdown>
+                    <div style={{ marginRight: 30, display: "flex" }}>
+                      <Dropdown.Toggle
                         style={{
-                          color: "#fff",
-                          fontWeight: 500,
-                          fontSize: 10,
-                          marginLeft: 5,
+                          backgroundColor: "rgba(29, 29, 65, 1)",
+                          position:"relative",
+                          bottom:10,
+                          background: "transparent",
                         }}
+                        variant="dark"
+                        id="dropdown-basic"
+                        className="d-lg-none d-md-block d-sm-block d-block"
                       >
-                        Emami Kumar
-                      </p>
-                      <p
-                        style={{
-                          color: "#fff",
-                          fontWeight: 500,
-                          fontSize: 10,
-                          marginLeft: 5,
-                          marginTop: -18,
-                        }}
-                      >
-                        Director
-                      </p>
+                        <img
+                          src={Profile}
+                          style={{ height: 40, width: 40, borderRadius: 50 }}
+                        ></img>
+                      </Dropdown.Toggle>
+                      <img
+                        className="d-lg-block d-md-none d-sm-none d-none"
+                        src={Profile}
+                        style={{ height: 40, width: 40, borderRadius: 50 }}
+                      ></img>
+
+                      <div className="mt-1">
+                        <p
+                          style={{
+                            color: "#fff",
+                            fontWeight: 500,
+                            fontSize: 10,
+                            marginLeft: 5,
+                          }}
+                        >
+                          Emami Kumar
+                        </p>
+                        <p
+                          style={{
+                            color: "#fff",
+                            fontWeight: 500,
+                            fontSize: 10,
+                            marginLeft: 5,
+                            marginTop: -18,
+                          }}
+                        >
+                          Director
+                        </p>
+                      </div>
                     </div>
-                  </div>
+
+                    <Dropdown.Menu>
+                      <Dropdown.Item onClick={()=>navigate('/')}>Logout</Dropdown.Item>
+                      
+                     
+                    </Dropdown.Menu>
+                  </Dropdown>
                 </div>
               )}
 
@@ -254,6 +286,13 @@ const Dashboard = () => {
                           padding: 6,
                         }}
                         className="white-text"
+                        onChange={(value) => {
+                          setDate(
+                            value.map((item) => {
+                              return moment(item).format("DD-MM-YYYY");
+                            })
+                          );
+                        }}
                       ></RangePicker>
                     </div>
                     <div className="col-lg-3 col-md-12 col-sm-6 col-6 mt-lg-0 mt-md-4 mt-sm-3 mt-3 text-md-center">
@@ -362,7 +401,7 @@ const Dashboard = () => {
                               color: "rgba(174, 171, 216, 1)",
                               padding: 4,
                               fontSize: 10,
-                              width: 100,
+                              width: 120,
                               marginTop: 5,
                               borderRadius: 5,
                             }}
@@ -373,6 +412,7 @@ const Dashboard = () => {
                                     <p
                                       style={{
                                         marginTop: 2,
+                                        marginLeft: 4,
                                         color:
                                           Dayselect === index ? "#fff" : null,
                                         fontWeight:
@@ -385,16 +425,18 @@ const Dashboard = () => {
                                     >
                                       {item}
                                     </p>
-                                    <div
-                                      style={{
-                                        height: 20,
-                                        width: 0.5,
-                                        backgroundColor:
-                                          "rgba(174, 171, 216, 1)",
-                                        borderRadius: "50%",
-                                        marginLeft: 2,
-                                      }}
-                                    ></div>
+                                    {index === 2 ? null : (
+                                      <div
+                                        style={{
+                                          height: 20,
+                                          width: 0.5,
+                                          backgroundColor:
+                                            "rgba(174, 171, 216, 1)",
+                                          borderRadius: "50%",
+                                          marginLeft: 4,
+                                        }}
+                                      ></div>
+                                    )}
                                   </div>
                                 ))
                               : null}
@@ -423,22 +465,39 @@ const Dashboard = () => {
                                       marginTop: 5,
                                     }}
                                   >
-                                    <img
-                                      onClick={() => {
-                                        setselect(index);
-                                      }}
-                                      src={item}
-                                      style={{
-                                        height: 20,
-                                        padding: 5,
-                                        width: 20,
-                                        color: "#fff",
-                                        backgroundColor:
-                                          select === index
-                                            ? "rgba(99, 89, 233, 1)"
-                                            : null,
-                                      }}
-                                    ></img>
+                                    {select === index ? (
+                                      <img
+                                        onClick={() => {
+                                          setselect(index);
+                                        }}
+                                        src={ChartActive[index]}
+                                        style={{
+                                          height: 20,
+                                          padding: 5,
+                                          width: 20,
+                                          backgroundColor:
+                                            select === index
+                                              ? "rgba(99, 89, 233, 1)"
+                                              : null,
+                                        }}
+                                      ></img>
+                                    ) : (
+                                      <img
+                                        onClick={() => {
+                                          setselect(index);
+                                        }}
+                                        src={item}
+                                        style={{
+                                          height: 20,
+                                          padding: 5,
+                                          width: 20,
+                                          backgroundColor:
+                                            select === index
+                                              ? "rgba(99, 89, 233, 1)"
+                                              : null,
+                                        }}
+                                      ></img>
+                                    )}
                                   </div>
                                 ))
                               : null}
@@ -564,21 +623,39 @@ const Dashboard = () => {
                                       marginTop: 5,
                                     }}
                                   >
-                                    <img
-                                      onClick={() => {
-                                        setselect1(index);
-                                      }}
-                                      src={item}
-                                      style={{
-                                        height: 20,
-                                        padding: 5,
-                                        width: 20,
-                                        backgroundColor:
-                                          select1 === index
-                                            ? "rgba(99, 89, 233, 1)"
-                                            : null,
-                                      }}
-                                    ></img>
+                                    {select1 === index ? (
+                                      <img
+                                        onClick={() => {
+                                          setselect(index);
+                                        }}
+                                        src={ChartActive[index]}
+                                        style={{
+                                          height: 20,
+                                          padding: 5,
+                                          width: 20,
+                                          backgroundColor:
+                                            select1 === index
+                                              ? "rgba(99, 89, 233, 1)"
+                                              : null,
+                                        }}
+                                      ></img>
+                                    ) : (
+                                      <img
+                                        onClick={() => {
+                                          setselect1(index);
+                                        }}
+                                        src={item}
+                                        style={{
+                                          height: 20,
+                                          padding: 5,
+                                          width: 20,
+                                          backgroundColor:
+                                            select1 === index
+                                              ? "rgba(99, 89, 233, 1)"
+                                              : null,
+                                        }}
+                                      ></img>
+                                    )}
                                   </div>
                                 ))
                               : null}
@@ -737,7 +814,10 @@ const Dashboard = () => {
 
                   {/* -----------------------------------------------Graph4------------------------------------------------------- */}
 
-                  <div className="col-lg-5 col-md-6 col-sm-12 col-12 mt-3" style={{marginBottom:20}}>
+                  <div
+                    className="col-lg-5 col-md-6 col-sm-12 col-12 mt-3"
+                    style={{ marginBottom: 20 }}
+                  >
                     <div
                       style={{
                         width: "100%",
@@ -796,21 +876,39 @@ const Dashboard = () => {
                                       marginTop: 5,
                                     }}
                                   >
-                                    <img
-                                      onClick={() => {
-                                        setselect2(index);
-                                      }}
-                                      src={item}
-                                      style={{
-                                        height: 20,
-                                        padding: 5,
-                                        width: 20,
-                                        backgroundColor:
-                                          select2 === index
-                                            ? "rgba(99, 89, 233, 1)"
-                                            : null,
-                                      }}
-                                    ></img>
+                                    {select2 === index ? (
+                                      <img
+                                        onClick={() => {
+                                          setselect2(index);
+                                        }}
+                                        src={ChartActive[index]}
+                                        style={{
+                                          height: 20,
+                                          padding: 5,
+                                          width: 20,
+                                          backgroundColor:
+                                            select2 === index
+                                              ? "rgba(99, 89, 233, 1)"
+                                              : null,
+                                        }}
+                                      ></img>
+                                    ) : (
+                                      <img
+                                        onClick={() => {
+                                          setselect2(index);
+                                        }}
+                                        src={item}
+                                        style={{
+                                          height: 20,
+                                          padding: 5,
+                                          width: 20,
+                                          backgroundColor:
+                                            select2 === index
+                                              ? "rgba(99, 89, 233, 1)"
+                                              : null,
+                                        }}
+                                      ></img>
+                                    )}
                                   </div>
                                 ))
                               : null}
@@ -875,14 +973,17 @@ const Dashboard = () => {
                   </div>
 
                   {/* -----------------------------------------------Graph5------------------------------------------------------- */}
-                  <div className="col-lg-4 col-md-6 col-sm-12 col-12 mt-sm-2 mt-lg-3 mt-md-0 mt-2" style={{marginBottom:20}}>
+                  <div
+                    className="col-lg-4 col-md-6 col-sm-12 col-12 mt-sm-2 mt-lg-3 mt-md-0 mt-2"
+                    style={{ marginBottom: 20 }}
+                  >
                     <div
                       style={{
                         width: "100%",
                         backgroundColor: "rgba(29, 29, 65, 1)",
                         height: "100%",
                         borderRadius: 5,
-                        padding:10
+                        padding: 10,
                       }}
                     >
                       <div
@@ -934,21 +1035,39 @@ const Dashboard = () => {
                                       marginTop: 5,
                                     }}
                                   >
-                                    <img
-                                      onClick={() => {
-                                        setselect3(index);
-                                      }}
-                                      src={item}
-                                      style={{
-                                        height: 20,
-                                        padding: 5,
-                                        width: 20,
-                                        backgroundColor:
-                                          select3 === index
-                                            ? "rgba(99, 89, 233, 1)"
-                                            : null,
-                                      }}
-                                    ></img>
+                                    {select3 === index ? (
+                                      <img
+                                        onClick={() => {
+                                          setselect3(index);
+                                        }}
+                                        src={ChartActive[index]}
+                                        style={{
+                                          height: 20,
+                                          padding: 5,
+                                          width: 20,
+                                          backgroundColor:
+                                            select3 === index
+                                              ? "rgba(99, 89, 233, 1)"
+                                              : null,
+                                        }}
+                                      ></img>
+                                    ) : (
+                                      <img
+                                        onClick={() => {
+                                          setselect3(index);
+                                        }}
+                                        src={item}
+                                        style={{
+                                          height: 20,
+                                          padding: 5,
+                                          width: 20,
+                                          backgroundColor:
+                                            select3 === index
+                                              ? "rgba(99, 89, 233, 1)"
+                                              : null,
+                                        }}
+                                      ></img>
+                                    )}
                                   </div>
                                 ))
                               : null}
@@ -959,7 +1078,7 @@ const Dashboard = () => {
                       </div>
                       <div
                         style={{
-                         maxHeight:"100%",
+                          maxHeight: "100%",
                           marginTop: 35,
                         }}
                       >
@@ -1015,7 +1134,10 @@ const Dashboard = () => {
                   </div>
 
                   {/* -----------------------------------------------Graph6------------------------------------------------------- */}
-                  <div className="col-lg-3 col-md-12 col-sm-12 col-12 mt-sm-2 mt-lg-3 mt-md-2 mt-2" style={{marginBottom:20}}>
+                  <div
+                    className="col-lg-3 col-md-12 col-sm-12 col-12 mt-sm-2 mt-lg-3 mt-md-2 mt-2"
+                    style={{ marginBottom: 20 }}
+                  >
                     <div
                       style={{
                         width: "100%",

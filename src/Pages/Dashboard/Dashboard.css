@@ -14,12 +14,12 @@
   padding-right: 0;
   padding-left: 0;
 }
-.no-gap .col-10{
+.no-gap .col-10 {
   padding-right: 0;
   padding-left: 0;
 }
-.export:hover{
-background-color: "red";
+.export:hover {
+  background-color: "red";
 }
 @media screen and (max-width: 980px) {
   .head1 {
@@ -29,4 +29,3 @@ background-color: "red";
     display: block;
   }
 }
-
