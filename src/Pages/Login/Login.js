@@ -47,7 +47,7 @@ const Login = () => {
     >
       <div className="container-fluid">
         <div className="row">
-          <div className="col-12" style={{ marginTop: 50 }}>
+          <div className="col-12" style={{ marginTop: 150 }}>
             <div class="loginHead">
               <div>
                 <h4
@@ -115,11 +115,11 @@ const Login = () => {
                   />
                 ) : (
                   <AiFillEyeInvisible
-                  style={{
-                    position: "relative",
-                    bottom: 35,
-                    left: 120,
-                  }}
+                    style={{
+                      position: "relative",
+                      bottom: 35,
+                      left: 120,
+                    }}
                     onClick={handleEyeClick}
                   />
                 )}
@@ -143,74 +143,8 @@ const Login = () => {
                 >
                   Log in
                 </p>
-
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    marginTop: 15,
-                  }}
-                >
-                  <div
-                    style={{
-                      width: 100,
-                      height: 1,
-                      backgroundColor: "#fff",
-                      marginTop: 12,
-                    }}
-                  ></div>
-                  <p
-                    style={{
-                      color: "#fff",
-                    }}
-                  >
-                    or
-                  </p>
-                  <div
-                    style={{
-                      width: 100,
-                      height: 1,
-                      backgroundColor: "#fff",
-                      marginTop: 12,
-                    }}
-                  ></div>
-                </div>
-                <div
-                  style={{
-                    backgroundColor: "#fff",
-                    borderRadius: "50%",
-                    height: 35,
-                    width: 35,
-                    margin: "auto",
-                  }}
-                >
-                  <i>
-                    <FcGoogle style={{ height: 35 }}></FcGoogle>
-                  </i>
-                </div>
-                <div className="mt-3">
-                  <span
-                    style={{
-                      color: "#fff",
-                      fontSize: 16,
-                      fontWeight: "400",
-                    }}
-                  >
-                    Dont't have an account yet?
-                  </span>
-                  <span
-                    style={{
-                      color: "rgba(99, 89, 233, 1)",
-                      fontSize: "16px",
-                      fontWeight: "bold",
-                      marginLeft: 5,
-                      cursor: "pointer",
-                    }}
-                    onClick={() => navigate("/Signup")}
-                  >
-                    Sign up
-                  </span>
-                </div>
+                
+                
               </div>
             </div>
           </div>
