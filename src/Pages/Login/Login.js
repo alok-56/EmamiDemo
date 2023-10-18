@@ -7,6 +7,7 @@ import {
 } from "react-icons/ai";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
+import Logo from "../../Images/logo.png";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -47,7 +48,7 @@ const Login = () => {
     >
       <div className="container-fluid">
         <div className="row">
-          <div className="col-12" style={{ marginTop: 150 }}>
+          <div className="col-12" style={{ marginTop: 130 }}>
             <div class="loginHead">
               <div>
                 <h4
@@ -58,7 +59,7 @@ const Login = () => {
                     paddingTop: 20,
                   }}
                 >
-                  Hello again
+                 <img style={{height:40}} src={Logo}></img>
                 </h4>
               </div>
               <div
