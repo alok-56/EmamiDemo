@@ -158,8 +158,8 @@ const Dashboard = () => {
                       <Dropdown.Toggle
                         style={{
                           backgroundColor: "rgba(29, 29, 65, 1)",
-                          position:"relative",
-                          bottom:10,
+                          position: "relative",
+                          bottom: 10,
                           background: "transparent",
                         }}
                         variant="dark"
@@ -203,9 +203,9 @@ const Dashboard = () => {
                     </div>
 
                     <Dropdown.Menu>
-                      <Dropdown.Item onClick={()=>navigate('/')}>Logout</Dropdown.Item>
-                      
-                     
+                      <Dropdown.Item onClick={() => navigate("/")}>
+                        Logout
+                      </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
                 </div>
@@ -272,10 +272,10 @@ const Dashboard = () => {
                         }}
                         aria-label="Default select example"
                       >
-                        <option>Open this select menu</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                        <option>Select Product</option>
+                        <option value="1">Boroplus</option>
+                        <option value="2">Zandu</option>
+                        <option value="3">Creme</option>
                       </Form.Select>
                     </div>
                     <div className="col-lg-3 col-md-4 col-sm-6 col-6 mt-lg-0 mt-md-0 mt-sm-3 mt-3">

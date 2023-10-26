@@ -59,7 +59,7 @@ const Login = () => {
                     paddingTop: 20,
                   }}
                 >
-                 <img style={{height:40}} src={Logo}></img>
+                  <img style={{ height: 40 }} src={Logo}></img>
                 </h4>
               </div>
               <div
@@ -144,8 +144,6 @@ const Login = () => {
                 >
                   Log in
                 </p>
-                
-                
               </div>
             </div>
           </div>
