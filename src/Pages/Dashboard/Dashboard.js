@@ -59,7 +59,16 @@ const Dashboard = () => {
   const [device, setDevice] = useState("");
   const [time, setTime] = useState("");
   const [document, setDocument] = useState("");
+  const [maps,setMap]=useState("")
+
   const doc = [];
+  const doc2 = [];
+  const doc3 = [];
+  const times=[];
+  const oss=[];
+  const browsers=[];
+  const devices=[];
+  const map=[]
 
   const navigate = useNavigate();
   const LogoutUser = () => {
@@ -73,24 +82,38 @@ const Dashboard = () => {
     setselect1(1);
     setselect2(2);
     toast("Exported Data Successfully");
+    doc.push(data);
+    doc2.push(week);
+    doc3.push(datetype);
+    times.push(time)
+    oss.push(os)
+    browsers.push(Browser)
+    devices.push(device)
+    map.push(maps)
 
-    document.map((item, index) => {
-      doc.push(item.dynamicData);
-      console.log(doc)
-    });
 
-    if(doc.length==document.length){
-      const workbook = XLSX.utils.book_new();
-      const worksheet = XLSX.utils.json_to_sheet(document);
-  
-      // Add the worksheet to the workbook
-      XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet 1");
-  
-      // Create a blob from the workbook
-      XLSX.writeFile(workbook, "MyEcel.xlsx");
-    }
+    const workbook = XLSX.utils.book_new();
+    const worksheet = XLSX.utils.json_to_sheet(doc);
+    const worksheet2 = XLSX.utils.json_to_sheet(doc2);
+    const worksheet3 = XLSX.utils.json_to_sheet(doc3);
+    const worksheet4 = XLSX.utils.json_to_sheet(times);
+    const worksheet5 = XLSX.utils.json_to_sheet(oss);
+    const worksheet6 = XLSX.utils.json_to_sheet(browsers);
+    const worksheet7 = XLSX.utils.json_to_sheet(devices);
+    const worksheet8 = XLSX.utils.json_to_sheet(map);
 
-   
+    // Add the worksheet to the workbook
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Month");
+    XLSX.utils.book_append_sheet(workbook, worksheet2, "Week");
+    XLSX.utils.book_append_sheet(workbook, worksheet3, "Date");
+    XLSX.utils.book_append_sheet(workbook, worksheet4, "Time");
+    XLSX.utils.book_append_sheet(workbook, worksheet5, "Os");
+    XLSX.utils.book_append_sheet(workbook, worksheet6, "Browser");
+    XLSX.utils.book_append_sheet(workbook, worksheet7, "Device");
+    XLSX.utils.book_append_sheet(workbook, worksheet8, "City");
+
+    // Create a blob from the workbook
+    XLSX.writeFile(workbook, "MyEcel.xlsx");
   };
 
   // let qr_code_name = "Zandu";
@@ -122,6 +145,7 @@ const Dashboard = () => {
         setTime(res.time);
         setLoad(false);
         setDocument(res.result);
+        setMap(res.map)
       })
       .catch((err) => {
         setLoad(false);
@@ -252,7 +276,7 @@ const Dashboard = () => {
                             marginLeft: 5,
                           }}
                         >
-                          Emami Kumar
+                          Emami Adwin
                         </p>
                         <p
                           style={{
