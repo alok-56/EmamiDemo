@@ -30,6 +30,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import moment from "moment/moment";
 import Dropdown from "react-bootstrap/Dropdown";
+import { FetchRange } from "../../Api";
+import { SpinnerRoundOutlined, SpinnerCircularFixed } from "spinners-react";
 
 const { RangePicker } = DatePicker;
 
@@ -37,16 +39,31 @@ const Dashboard = () => {
   const [select, setselect] = useState(0);
   const [select1, setselect1] = useState(1);
   const [select2, setselect2] = useState(2);
-  const [select3, setselect3] = useState(3);
-  const [Dayselect, setDaySelect] = useState(0);
-  const ChartType = [pieimg, barimg, Lineimg, Tableimg, exportimg];
-  const ChartActive = [PieActive, BarActive, LineActive, Textactive, exportimg];
+  const [select3, setselect3] = useState(0);
+  const [Dayselect, setDaySelect] = useState(1);
+  const ChartType = [barimg, Lineimg, Tableimg, exportimg];
+  const ChartActive = [BarActive, LineActive, Textactive, exportimg];
   const DayType = ["Date", "Week", "Month"];
   const [DashBoard, setDashBoard] = useState(false);
   const [date, setDate] = useState([]);
+  const [qr_code_name, setqr_code_name] = useState("");
+  const [load, setLoad] = useState(false);
+
+  //--------------------Graph State---------------//
+  const [data, setData] = useState("");
+  const [totalscan, setTotalscan] = useState("");
+  const [week, setWeek] = useState("");
+  const [datetype, setDatetype] = useState("");
+  const [Browser, setBrowser] = useState("");
+  const [os, setOs] = useState("");
+  const [device, setDevice] = useState("");
+  const [time, setTime] = useState("");
+  const [document, setDocument] = useState("");
+  const doc = [];
 
   const navigate = useNavigate();
   const LogoutUser = () => {
+    localStorage.clear("user");
     toast("Logout Successfully");
     navigate("/");
   };
@@ -55,14 +72,63 @@ const Dashboard = () => {
     setselect(0);
     setselect1(1);
     setselect2(2);
-    setselect3(3);
     toast("Exported Data Successfully");
-    var wb = XLSX.utils.book_new(),
-      ws = XLSX.utils.json_to_sheet();
-    XLSX.utils.book_append_sheet(wb, ws, "MySheet1");
 
-    XLSX.writeFile(wb, "MyExcel.xlsx");
+    document.map((item, index) => {
+      doc.push(item.dynamicData);
+      console.log(doc)
+    });
+
+    if(doc.length==document.length){
+      const workbook = XLSX.utils.book_new();
+      const worksheet = XLSX.utils.json_to_sheet(document);
+  
+      // Add the worksheet to the workbook
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet 1");
+  
+      // Create a blob from the workbook
+      XLSX.writeFile(workbook, "MyEcel.xlsx");
+    }
+
+   
   };
+
+  // let qr_code_name = "Zandu";
+  let startDate = date[0];
+  let endDate = date[1];
+
+  //---------------------------Get Range Api Call---------------------------//
+  const getRangeData = () => {
+    if (!qr_code_name || qr_code_name === "Select Product") {
+      toast("Product Name Required");
+      return false;
+    } else if (!startDate) {
+      toast("Start Date Required");
+      return false;
+    } else if (!endDate) {
+      toast("End Date Required");
+    }
+
+    setLoad(true);
+    FetchRange(qr_code_name, startDate, endDate)
+      .then((res) => {
+        setData(res.month);
+        setTotalscan(res.TotalScans);
+        setWeek(res.week);
+        setDatetype(res.date);
+        setBrowser(res.Browser);
+        setOs(res.Os);
+        setDevice(res.device);
+        setTime(res.time);
+        setLoad(false);
+        setDocument(res.result);
+      })
+      .catch((err) => {
+        setLoad(false);
+      });
+  };
+
+  //---------------------------End Get Range api call------------------------//
 
   return (
     <div
@@ -203,7 +269,7 @@ const Dashboard = () => {
                     </div>
 
                     <Dropdown.Menu>
-                      <Dropdown.Item onClick={() => navigate("/")}>
+                      <Dropdown.Item onClick={() => LogoutUser()}>
                         Logout
                       </Dropdown.Item>
                     </Dropdown.Menu>
@@ -271,11 +337,13 @@ const Dashboard = () => {
                           width: "100%",
                         }}
                         aria-label="Default select example"
+                        onChange={(e) => setqr_code_name(e.target.value)}
+                        value={qr_code_name}
                       >
                         <option>Select Product</option>
-                        <option value="1">Boroplus</option>
-                        <option value="2">Zandu</option>
-                        <option value="3">Creme</option>
+                        <option value="Boroplus">Boroplus</option>
+                        <option value="Zandu">Zandu</option>
+                        <option value="Creme">Creme</option>
                       </Form.Select>
                     </div>
                     <div className="col-lg-3 col-md-4 col-sm-6 col-6 mt-lg-0 mt-md-0 mt-sm-3 mt-3">
@@ -289,16 +357,35 @@ const Dashboard = () => {
                         onChange={(value) => {
                           setDate(
                             value.map((item) => {
-                              return moment(item).format("DD-MM-YYYY");
+                              return item.format("YYYY-MM-DDTHH:mm:ss.SSSSSSZ");
                             })
                           );
                         }}
                       ></RangePicker>
                     </div>
-                    <div className="col-lg-3 col-md-12 col-sm-6 col-6 mt-lg-0 mt-md-4 mt-sm-3 mt-3 text-md-center">
-                      <p style={{ width: "100%" }} className="btn btn-primary">
-                        Get Analytics
-                      </p>
+                    <div className="col-lg-3 col-md-12 col-sm-6 col-6 mt-lg-0 mt-md-4 mt-sm-3 mt-3 text-md-center ">
+                      {load ? (
+                        <SpinnerCircularFixed
+                          size={30}
+                          thickness={200}
+                          speed={133}
+                          color="rgba(172, 57, 59, 1)"
+                          secondaryColor="rgba(57, 172, 102, 1)"
+                          className="btn btn-primary"
+                          style={{
+                            width: 180,
+                            height: 40,
+                          }}
+                        />
+                      ) : (
+                        <p
+                          style={{ width: "100%" }}
+                          className="btn btn-primary"
+                          onClick={() => getRangeData()}
+                        >
+                          Get Analytics
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -325,7 +412,7 @@ const Dashboard = () => {
                       marginTop: 10,
                     }}
                   >
-                    Total Scans : 19
+                    Total Scans : {totalscan}
                   </p>
                   <p
                     style={{
@@ -506,60 +593,220 @@ const Dashboard = () => {
                           {/* //-------------------------------Change graph End---------------------------------// */}
                         </div>
                       </div>
-                      <div
-                        style={{
-                          maxHeight: "100%",
-                        }}
-                      >
-                        {select === 0 ? (
-                          <PieChart data={[9, 4]}></PieChart>
-                        ) : select === 1 ? (
-                          <BarChart></BarChart>
-                        ) : select === 2 ? (
-                          <Lines data={[20, 90, 90, 70]}></Lines>
-                        ) : select === 3 ? (
-                          <TextChart></TextChart>
-                        ) : (
-                          handleExport(select)
-                        )}
+                      {Dayselect === 1 ? (
+                        <div
+                          style={{
+                            maxHeight: "100%",
+                          }}
+                        >
+                          {select === 0 ? (
+                            <BarChart
+                              data={[
+                                week.sun,
+                                week.mon,
+                                week.wed,
+                                week.thues,
+                                week.tues,
+                                week.fri,
+                                week.sat,
+                                week.sun,
+                              ]}
+                              type={"day"}
+                            ></BarChart>
+                          ) : select === 1 ? (
+                            <Lines
+                              data={[
+                                week.sun,
+                                week.mon,
+                                week.wed,
+                                week.thues,
+                                week.tues,
+                                week.fri,
+                                week.sat,
+                                week.sun,
+                              ]}
+                              type={"day"}
+                            ></Lines>
+                          ) : select === 2 ? (
+                            <TextChart></TextChart>
+                          ) : (
+                            handleExport()
+                          )}
 
-                        {select === 3 ? null : (
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "center",
-                            }}
-                          >
-                            <img
-                              style={{ height: 10, width: 15 }}
-                              className="mt-2"
-                              src={Scanicon}
-                            ></img>
-                            <p
-                              className="mt-1"
+                          {select === 2 ? null : (
+                            <div
                               style={{
-                                color: "rgba(150, 165, 184, 1)",
-                                marginLeft: 10,
-                                fontSize: 12,
-                                fontWeight: "bold",
+                                display: "flex",
+                                justifyContent: "center",
                               }}
                             >
-                              Scan
-                            </p>
-                            <p
-                              className="mt-1"
+                              <img
+                                style={{ height: 10, width: 15 }}
+                                className="mt-2"
+                                src={Scanicon}
+                              ></img>
+                              <p
+                                className="mt-1"
+                                style={{
+                                  color: "rgba(150, 165, 184, 1)",
+                                  marginLeft: 10,
+                                  fontSize: 12,
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                Scan
+                              </p>
+                              <p
+                                className="mt-1"
+                                style={{
+                                  color: "rgba(255, 255, 255, 1)",
+                                  marginLeft: 10,
+                                  fontSize: 12,
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                {totalscan}
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                      ) : Dayselect === 0 ? (
+                        <div
+                          style={{
+                            maxHeight: "100%",
+                          }}
+                        >
+                          {select === 0 ? (
+                            <BarChart data={datetype} type={"date"}></BarChart>
+                          ) : select === 1 ? (
+                            <Lines data={datetype} type={"date"}></Lines>
+                          ) : select === 2 ? (
+                            <TextChart></TextChart>
+                          ) : (
+                            handleExport()
+                          )}
+
+                          {select === 2 ? null : (
+                            <div
                               style={{
-                                color: "rgba(255, 255, 255, 1)",
-                                marginLeft: 10,
-                                fontSize: 12,
-                                fontWeight: "bold",
+                                display: "flex",
+                                justifyContent: "center",
                               }}
                             >
-                              19
-                            </p>
-                          </div>
-                        )}
-                      </div>
+                              <img
+                                style={{ height: 10, width: 15 }}
+                                className="mt-2"
+                                src={Scanicon}
+                              ></img>
+                              <p
+                                className="mt-1"
+                                style={{
+                                  color: "rgba(150, 165, 184, 1)",
+                                  marginLeft: 10,
+                                  fontSize: 12,
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                Scan
+                              </p>
+                              <p
+                                className="mt-1"
+                                style={{
+                                  color: "rgba(255, 255, 255, 1)",
+                                  marginLeft: 10,
+                                  fontSize: 12,
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                {totalscan}
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        <div
+                          style={{
+                            maxHeight: "100%",
+                          }}
+                        >
+                          {select === 0 ? (
+                            <BarChart
+                              data={[
+                                data.jan,
+                                data.feb,
+                                data.march,
+                                data.april,
+                                data.may,
+                                data.june,
+                                data.july,
+                                data.augest,
+                                data.sept,
+                                data.oct,
+                                data.nov,
+                                data.dec,
+                              ]}
+                            ></BarChart>
+                          ) : select === 1 ? (
+                            <Lines
+                              data={[
+                                data.jan,
+                                data.feb,
+                                data.march,
+                                data.april,
+                                data.may,
+                                data.june,
+                                data.july,
+                                data.augest,
+                                data.sept,
+                                data.oct,
+                                data.nov,
+                                data.dec,
+                              ]}
+                            ></Lines>
+                          ) : select === 2 ? (
+                            <TextChart></TextChart>
+                          ) : (
+                            handleExport(select)
+                          )}
+
+                          {select === 2 ? null : (
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <img
+                                style={{ height: 10, width: 15 }}
+                                className="mt-2"
+                                src={Scanicon}
+                              ></img>
+                              <p
+                                className="mt-1"
+                                style={{
+                                  color: "rgba(150, 165, 184, 1)",
+                                  marginLeft: 10,
+                                  fontSize: 12,
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                Scan
+                              </p>
+                              <p
+                                className="mt-1"
+                                style={{
+                                  color: "rgba(255, 255, 255, 1)",
+                                  marginLeft: 10,
+                                  fontSize: 12,
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                19
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
 
@@ -670,19 +917,22 @@ const Dashboard = () => {
                           marginTop: 35,
                         }}
                       >
+                        {/* 
+select1 === 0 ? (
+                          // <div
+                          //   style={{
+                          //     marginTop: -50,
+                          //   }}
+                          // >
+                          //   <PieChart data={[10, 15]}></PieChart>
+                          // </div>
+                        ) : */}
+
                         {select1 === 0 ? (
-                          <div
-                            style={{
-                              marginTop: -50,
-                            }}
-                          >
-                            <PieChart data={[10, 15]}></PieChart>
-                          </div>
+                          <BarChart data={Browser} type={"browser"}></BarChart>
                         ) : select1 === 1 ? (
-                          <BarChart></BarChart>
+                          <Lines data={Browser} type={"browser"}></Lines>
                         ) : select1 === 2 ? (
-                          <Lines data={[20, 90, 90, 70]}></Lines>
-                        ) : select1 === 3 ? (
                           <div
                             style={{
                               marginTop: -35,
@@ -694,35 +944,36 @@ const Dashboard = () => {
                           handleExport()
                         )}
 
-                        {select1 === 1 ||
-                        select1 === 2 ||
-                        select1 === 3 ? null : (
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "center",
-                              marginTop: select === 3 ? "30" : null,
-                            }}
-                            className="mt-1"
-                          >
-                            <img
-                              style={{ height: 10, width: 15 }}
-                              className="mt-2"
-                              src={Scanicon}
-                            ></img>
-                            <p
-                              className="mt-1"
+                        {
+                          // select1 === 1 ||
+                          select1 === 2 || select1 === 3 ? null : (
+                            <div
                               style={{
-                                color: "rgba(150, 165, 184, 1)",
-                                marginLeft: 10,
-                                fontSize: 12,
-                                fontWeight: "bold",
+                                display: "flex",
+                                justifyContent: "center",
+                                marginTop: select === 3 ? "30" : null,
                               }}
+                              className="mt-1"
                             >
-                              Browsers
-                            </p>
-                          </div>
-                        )}
+                              <img
+                                style={{ height: 10, width: 15 }}
+                                className="mt-2"
+                                src={Scanicon}
+                              ></img>
+                              <p
+                                className="mt-1"
+                                style={{
+                                  color: "rgba(150, 165, 184, 1)",
+                                  marginLeft: 10,
+                                  fontSize: 12,
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                Browsers
+                              </p>
+                            </div>
+                          )
+                        }
                       </div>
                     </div>
                   </div>
@@ -923,12 +1174,10 @@ const Dashboard = () => {
                         }}
                       >
                         {select2 === 0 ? (
-                          <PieChart data={[80, 10]}></PieChart>
+                          <BarChart data={time} type={"time"}></BarChart>
                         ) : select2 === 1 ? (
-                          <BarChart></BarChart>
+                          <Lines data={time} type={"time"}></Lines>
                         ) : select2 === 2 ? (
-                          <Lines data={[20, 90, 90, 70]}></Lines>
-                        ) : select2 === 3 ? (
                           <Lines data={[10, 30, 50, 70]}></Lines>
                         ) : (
                           handleExport()
@@ -954,7 +1203,7 @@ const Dashboard = () => {
                               fontWeight: "bold",
                             }}
                           >
-                            Scan
+                            Scans
                           </p>
                           <p
                             className="mt-1"
@@ -965,7 +1214,7 @@ const Dashboard = () => {
                               fontWeight: "bold",
                             }}
                           >
-                            19
+                            {totalscan}
                           </p>
                         </div>
                       </div>
@@ -1083,18 +1332,10 @@ const Dashboard = () => {
                         }}
                       >
                         {select3 === 0 ? (
-                          <div
-                            style={{
-                              marginTop: -50,
-                            }}
-                          >
-                            <PieChart data={[10, 15]}></PieChart>
-                          </div>
+                          <BarChart data={os} type={"os"}></BarChart>
                         ) : select3 === 1 ? (
-                          <BarChart></BarChart>
+                          <Lines data={os} type={"os"}></Lines>
                         ) : select3 === 2 ? (
-                          <Lines data={[20, 90, 90, 70]}></Lines>
-                        ) : select3 === 3 ? (
                           <Lines data={[10, 30, 50, 70]}></Lines>
                         ) : (
                           handleExport()
@@ -1125,7 +1366,7 @@ const Dashboard = () => {
                                 fontWeight: "bold",
                               }}
                             >
-                              Browsers
+                              Os
                             </p>
                           </div>
                         )}
@@ -1208,7 +1449,7 @@ const Dashboard = () => {
                           marginTop: 0,
                         }}
                       >
-                        <PieChart data={[10, 20]}></PieChart>
+                        <PieChart data={device}></PieChart>
 
                         <div
                           style={{
@@ -1231,7 +1472,7 @@ const Dashboard = () => {
                               fontWeight: "bold",
                             }}
                           >
-                            Browsers
+                            Devices
                           </p>
                         </div>
                       </div>

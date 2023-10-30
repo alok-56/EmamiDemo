@@ -36,7 +36,7 @@ export const options = {
     },
     y: {
       grid: {
-       color:"rgba(140, 137, 180, 0.35)"
+        color: "rgba(140, 137, 180, 0.35)",
       },
     },
   },
@@ -44,9 +44,27 @@ export const options = {
 
 export function Lines(props) {
   const labels =
-    props.label
-      ? props.label
-      : ["January", "February", "March", "April", "May", "June", "July"];
+    props.type === "day"
+      ? ["sunday", "monday", "tuesday", "thursday", "Friday", "satarday"]
+      : props.type === "date"
+      ? ""
+      : props.type === "browser"
+      ? "":props.type==="os"?"":props.type === "time"
+      ? ""
+      : [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "aug",
+          "sept",
+          "oct",
+          "nov",
+          "dec",
+        ];
 
   const data = {
     labels,
@@ -61,6 +79,6 @@ export function Lines(props) {
       },
     ],
   };
-  console.log(props);
+
   return <Line options={options} data={data} />;
 }

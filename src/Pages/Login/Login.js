@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { FcGoogle } from "react-icons/fc";
+import React, { useState, CSSProperties } from "react";
 import {
   AiOutlineLoading,
   AiFillEye,
@@ -8,36 +7,38 @@ import {
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../Images/logo.png";
+import { LoginUser } from "../../Api";
+import { SpinnerRoundOutlined, SpinnerCircularFixed } from "spinners-react";
+import { toast, ToastContainer } from "react-toastify";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
+  const [Email, setEmail] = useState("");
+  const [Password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [load, setLoad] = useState(false);
   const navigate = useNavigate();
 
   const handleEyeClick = () => {
     setShowPassword((bool) => !bool);
   };
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
+  const HandleLogin = () => {
+    setLoad(true);
+    LoginUser(Email, Password).then((res) => {
+      console.log(res);
+      if (res.status === "success") {
+        localStorage.setItem("user", JSON.stringify(res.data));
+        setLoad(false);
+        toast("Login Successful");
+        navigate("/Dashboard");
+        setEmail("");
+        setPassword("");
+      } else {
+        setLoad(false);
+        toast("Incorrect Details");
+      }
+    });
   };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-    // Implement your login logic here
-  };
-
-  const [showPassword, setShowPassword] = useState(false);
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
   return (
     <div
       style={{
@@ -46,6 +47,7 @@ const Login = () => {
         backgroundColor: "rgba(20, 19, 50, 1)",
       }}
     >
+      <ToastContainer />
       <div className="container-fluid">
         <div className="row">
           <div className="col-12" style={{ marginTop: 130 }}>
@@ -80,6 +82,8 @@ const Login = () => {
                     borderRadius: 6,
                   }}
                   placeholder="username"
+                  value={Email}
+                  onChange={(e) => setEmail(e.target.value)}
                 ></input>
                 <div
                   style={{
@@ -88,7 +92,7 @@ const Login = () => {
                   }}
                 >
                   <input
-                    value={password}
+                    value={Password}
                     minLength={8}
                     placeholder="Enter your password"
                     type={showPassword ? "text" : "password"}
@@ -138,11 +142,26 @@ const Login = () => {
                   Forget password
                 </p>
                 <p
-                  style={{ width: "100%", borderRadius: 5, fontWeight: "bold" }}
+                  style={{
+                    width: "100%",
+                    borderRadius: 5,
+                    fontWeight: "bold",
+                    height: 45,
+                  }}
                   className="btn btn-primary mt-3"
-                  onClick={() => navigate("/Dashboard")}
+                  onClick={() => HandleLogin()}
                 >
-                  Log in
+                  {load ? (
+                    <SpinnerCircularFixed
+                      size={30}
+                      thickness={200}
+                      speed={133}
+                      color="rgba(172, 57, 59, 1)"
+                      secondaryColor="rgba(57, 172, 102, 1)"
+                    />
+                  ) : (
+                    <p>Login</p>
+                  )}
                 </p>
               </div>
             </div>
