@@ -10,29 +10,29 @@ import { DatePicker } from "antd";
 import { Lines } from "../../Charts/Line";
 import exportimg from "../../Images/export.png";
 import barimg from "../../Images/bar.png";
-import pieimg from "../../Images/pie.png";
-import Tableimg from "../../Images/table.png";
+// import pieimg from "../../Images/pie.png";
+// import Tableimg from "../../Images/table.png";
 import Lineimg from "../../Images/Lineimg.png";
 import Scanicon from "../../Images/scansicon.png";
 import ExportAll from "../../Images/exportfull.png";
 import LineActive from "../../Images/selectedChart.png";
-import PieActive from "../../Images/pieactive.png";
+// import PieActive from "../../Images/pieactive.png";
 import BarActive from "../../Images/baractive.png";
-import Textactive from "../../Images/textactive.png";
+// import Textactive from "../../Images/textactive.png";
 import { Geo, data } from "../../Charts/Geo";
 import { PieChart } from "../../Charts/PieChart";
 import { BarChart } from "../../Charts/Bar";
-import TextChart from "../../Charts/Text";
+// import TextChart from "../../Charts/Text";
 import { useNavigate } from "react-router-dom";
 import * as XLSX from "xlsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import moment from "moment/moment";
+// import moment from "moment/moment";
 import Dropdown from "react-bootstrap/Dropdown";
 import { FetchRange } from "../../Api";
 import { SpinnerRoundOutlined, SpinnerCircularFixed } from "spinners-react";
 import { useScreenshot } from "use-react-screenshot";
-import { WhatsappIcon, WhatsappShareButton } from "react-share";
+// import { WhatsappIcon, WhatsappShareButton } from "react-share";
 
 const { RangePicker } = DatePicker;
 
@@ -177,7 +177,6 @@ const Dashboard = () => {
 
   //---------------------------Screenshots----------------------//
 
-  const ShareImage = () => {};
 
   return (
     <div
