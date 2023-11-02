@@ -31,7 +31,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Dropdown from "react-bootstrap/Dropdown";
 import { FetchRange } from "../../Api";
 import { SpinnerRoundOutlined, SpinnerCircularFixed } from "spinners-react";
-import { useScreenshot } from "use-react-screenshot";
+// import { useScreenshot } from "use-react-screenshot";
 // import { WhatsappIcon, WhatsappShareButton } from "react-share";
 
 const { RangePicker } = DatePicker;
@@ -126,12 +126,12 @@ const Dashboard = () => {
   };
 
   const ref = createRef(null);
-  const [image, takeScreenshot] = useScreenshot();
+  // const [image, takeScreenshot] = useScreenshot();
 
   const getImage1 = async () => {
     takeScreenshot(ref.current);
     if (!toggle) {
-      ImageDownload(image);
+      // ImageDownload(image);
       toast("Graph Captured Success");
     }
     setToggle(!toggle);
