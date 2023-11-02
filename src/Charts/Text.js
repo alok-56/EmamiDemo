@@ -8,7 +8,7 @@ const TextChart = () => {
       <div id="head">
         <div
           style={{
-            width: 299,
+            width: 300,
             display: "flex",
             justifyContent: "space-around",
             margin: "auto",
