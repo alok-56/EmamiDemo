@@ -3,7 +3,7 @@ import "./Dashboard.css";
 import Logo from "../../Images/logo.png";
 import Overview from "../../Images/overviewBtn.png";
 import Logout from "../../Images/Logout.png";
-import Profile from "../../Images/profile.png";
+import Profile from "../../Images/logo192.png";
 import Form from "react-bootstrap/Form";
 import High from "../../Images/high.png";
 import { DatePicker } from "antd";
@@ -213,7 +213,7 @@ const Dashboard = () => {
                   Export Analytics
                 </p>
               </div>
-              <div className="text-center">
+              {/* <div className="text-center">
                 {toggle ? (
                   <p
                     className="btn btn-outline-secondary mt-2"
@@ -229,7 +229,7 @@ const Dashboard = () => {
                     Download Graph
                   </p>
                 )}
-              </div>
+              </div> */}
               <div className="text-center" onClick={() => LogoutUser()}>
                 <img
                   style={{
