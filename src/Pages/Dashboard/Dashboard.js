@@ -129,7 +129,7 @@ const Dashboard = () => {
   // const [image, takeScreenshot] = useScreenshot();
 
   const getImage1 = async () => {
-    takeScreenshot(ref.current);
+    // takeScreenshot(ref.current);
     if (!toggle) {
       // ImageDownload(image);
       toast("Graph Captured Success");
@@ -506,7 +506,7 @@ const Dashboard = () => {
                   style={{
                     backgroundColor: "rgba(20, 19, 50, 1)",
                   }}
-                  ref={ref}
+                  // ref={ref}
                 >
                   {/* -----------------------------------------------Graph1------------------------------------------------------- */}
 
