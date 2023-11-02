@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./Pages/Login/Login";
 import Signup from "./Pages/Signup/Signup";
 import Privatecom from "./Pages/PrivateComp";
+import GeoGraph from "./Charts/Geo";
 
 const App = () => {
   const [user, setUser] = useState("");
@@ -21,6 +22,7 @@ const App = () => {
           </Route>
           <Route path="/" element={<Login></Login>}></Route>
           <Route path="/Signup" element={<Signup></Signup>}></Route>
+          <Route path="/Geo" element={<GeoGraph></GeoGraph>}></Route>
         </Routes>
       </BrowserRouter>
     </div>

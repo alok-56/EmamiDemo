@@ -19,7 +19,6 @@ import LineActive from "../../Images/selectedChart.png";
 // import PieActive from "../../Images/pieactive.png";
 import BarActive from "../../Images/baractive.png";
 // import Textactive from "../../Images/textactive.png";
-import { Geo, data } from "../../Charts/Geo";
 import { PieChart } from "../../Charts/PieChart";
 import { BarChart } from "../../Charts/Bar";
 // import TextChart from "../../Charts/Text";
@@ -31,6 +30,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Dropdown from "react-bootstrap/Dropdown";
 import { FetchRange } from "../../Api";
 import { SpinnerRoundOutlined, SpinnerCircularFixed } from "spinners-react";
+import GeoGraph, { Geo } from "../../Charts/Geo";
 // import { useScreenshot } from "use-react-screenshot";
 // import { WhatsappIcon, WhatsappShareButton } from "react-share";
 
@@ -69,6 +69,7 @@ const Dashboard = () => {
   const [time, setTime] = useState("");
   const [document, setDocument] = useState("");
   const [maps, setMap] = useState("");
+  const [city,setCity]=useState("")
 
   const doc = [];
   const doc2 = [];
@@ -167,6 +168,7 @@ const Dashboard = () => {
         setLoad(false);
         setDocument(res.result);
         setMap(res.map);
+        setCity(res.citycode)
       })
       .catch((err) => {
         setLoad(false);
@@ -196,7 +198,7 @@ const Dashboard = () => {
               }}
             >
               <div className="text-center">
-                <img className="mt-4" style={{ width: 100 }} src={Logo}></img>
+                <img className="mt-4" style={{ width: 130 }} src={Logo}></img>
               </div>
               <div className="text-center" onClick={() => setDashBoard(false)}>
                 <img
@@ -486,9 +488,7 @@ const Dashboard = () => {
                       color: "rgba(31, 218, 28, 1)",
                       marginTop: 12,
                     }}
-                  >
-                    88%
-                  </p>
+                  ></p>
                   <img
                     src={High}
                     height={15}
@@ -724,7 +724,7 @@ const Dashboard = () => {
                                   fontWeight: "bold",
                                 }}
                               >
-                                Scan
+                                Scans
                               </p>
                               <p
                                 className="mt-1"
@@ -775,7 +775,7 @@ const Dashboard = () => {
                                   fontWeight: "bold",
                                 }}
                               >
-                                Scan
+                                Scans
                               </p>
                               <p
                                 className="mt-1"
@@ -856,7 +856,7 @@ const Dashboard = () => {
                                   fontWeight: "bold",
                                 }}
                               >
-                                Scan
+                                Scans
                               </p>
                               <p
                                 className="mt-1"
@@ -1109,12 +1109,12 @@ select1 === 0 ? (
                         </div>
                       </div>
                       <div
-                        style={{
-                          height: "100%",
-                          padding: 5,
-                        }}
+                        // style={{
+                        //   height: "100%",
+                        //   padding: 5,
+                        // }}
                       >
-                        <Geo></Geo>
+                        <GeoGraph data={city} map={maps}></GeoGraph>
                       </div>
                     </div>
                   </div>
