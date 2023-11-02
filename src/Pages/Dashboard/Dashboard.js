@@ -90,7 +90,7 @@ const Dashboard = () => {
     setselect(0);
     setselect1(1);
     setselect2(1);
-    setselect3(1)
+    setselect3(1);
     toast("Exported Data Successfully");
     doc.push(data);
     doc2.push(week);
@@ -176,7 +176,6 @@ const Dashboard = () => {
   //---------------------------End Get Range api call------------------------//
 
   //---------------------------Screenshots----------------------//
-
 
   return (
     <div
