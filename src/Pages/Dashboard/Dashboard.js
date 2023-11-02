@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, createRef, useRef, useEffect } from "react";
 import "./Dashboard.css";
 import Logo from "../../Images/logo.png";
 import Overview from "../../Images/overviewBtn.png";
-import Analities from "../../Images/Analities.png";
 import Logout from "../../Images/Logout.png";
 import Profile from "../../Images/profile.png";
 import Form from "react-bootstrap/Form";
@@ -32,22 +31,32 @@ import moment from "moment/moment";
 import Dropdown from "react-bootstrap/Dropdown";
 import { FetchRange } from "../../Api";
 import { SpinnerRoundOutlined, SpinnerCircularFixed } from "spinners-react";
+import { useScreenshot } from "use-react-screenshot";
+import { WhatsappIcon, WhatsappShareButton } from "react-share";
 
 const { RangePicker } = DatePicker;
+
+const ImageDownload = (uri) => {
+  const a = document.createElement("a");
+  a.href = uri;
+  a.download = "images.jpeg";
+  a.click();
+};
 
 const Dashboard = () => {
   const [select, setselect] = useState(0);
   const [select1, setselect1] = useState(1);
-  const [select2, setselect2] = useState(2);
+  const [select2, setselect2] = useState(0);
   const [select3, setselect3] = useState(0);
   const [Dayselect, setDaySelect] = useState(1);
-  const ChartType = [barimg, Lineimg, Tableimg, exportimg];
-  const ChartActive = [BarActive, LineActive, Textactive, exportimg];
+  const ChartType = [barimg, Lineimg, exportimg];
+  const ChartActive = [BarActive, LineActive, exportimg];
   const DayType = ["Date", "Week", "Month"];
   const [DashBoard, setDashBoard] = useState(false);
   const [date, setDate] = useState([]);
   const [qr_code_name, setqr_code_name] = useState("");
   const [load, setLoad] = useState(false);
+  const [toggle, setToggle] = useState(true);
 
   //--------------------Graph State---------------//
   const [data, setData] = useState("");
@@ -59,16 +68,16 @@ const Dashboard = () => {
   const [device, setDevice] = useState("");
   const [time, setTime] = useState("");
   const [document, setDocument] = useState("");
-  const [maps,setMap]=useState("")
+  const [maps, setMap] = useState("");
 
   const doc = [];
   const doc2 = [];
   const doc3 = [];
-  const times=[];
-  const oss=[];
-  const browsers=[];
-  const devices=[];
-  const map=[]
+  const times = [];
+  const oss = [];
+  const browsers = [];
+  const devices = [];
+  const map = [];
 
   const navigate = useNavigate();
   const LogoutUser = () => {
@@ -80,17 +89,17 @@ const Dashboard = () => {
   const handleExport = () => {
     setselect(0);
     setselect1(1);
-    setselect2(2);
+    setselect2(1);
+    setselect3(1)
     toast("Exported Data Successfully");
     doc.push(data);
     doc2.push(week);
     doc3.push(datetype);
-    times.push(time)
-    oss.push(os)
-    browsers.push(Browser)
-    devices.push(device)
-    map.push(maps)
-
+    times.push(time);
+    oss.push(os);
+    browsers.push(Browser);
+    devices.push(device);
+    map.push(maps);
 
     const workbook = XLSX.utils.book_new();
     const worksheet = XLSX.utils.json_to_sheet(doc);
@@ -114,6 +123,18 @@ const Dashboard = () => {
 
     // Create a blob from the workbook
     XLSX.writeFile(workbook, "MyEcel.xlsx");
+  };
+
+  const ref = createRef(null);
+  const [image, takeScreenshot] = useScreenshot();
+
+  const getImage1 = async () => {
+    takeScreenshot(ref.current);
+    if (!toggle) {
+      ImageDownload(image);
+      toast("Graph Captured Success");
+    }
+    setToggle(!toggle);
   };
 
   // let qr_code_name = "Zandu";
@@ -145,7 +166,7 @@ const Dashboard = () => {
         setTime(res.time);
         setLoad(false);
         setDocument(res.result);
-        setMap(res.map)
+        setMap(res.map);
       })
       .catch((err) => {
         setLoad(false);
@@ -153,6 +174,10 @@ const Dashboard = () => {
   };
 
   //---------------------------End Get Range api call------------------------//
+
+  //---------------------------Screenshots----------------------//
+
+  const ShareImage = () => {};
 
   return (
     <div
@@ -177,16 +202,35 @@ const Dashboard = () => {
               </div>
               <div className="text-center" onClick={() => setDashBoard(false)}>
                 <img
+                  onClick={getImage1}
                   style={{ marginTop: "50px", width: 150 }}
                   src={Overview}
                 ></img>
               </div>
               <div className="text-center">
-                <img
-                  style={{ marginTop: "30px", width: 100 }}
-                  src={Analities}
-                  onClick={() => setDashBoard(true)}
-                ></img>
+                <p
+                  className="btn btn-outline-secondary mt-4"
+                  onClick={() => handleExport()}
+                >
+                  Export Analytics
+                </p>
+              </div>
+              <div className="text-center">
+                {toggle ? (
+                  <p
+                    className="btn btn-outline-secondary mt-2"
+                    onClick={() => getImage1()}
+                  >
+                    Capture Graph
+                  </p>
+                ) : (
+                  <p
+                    className="btn btn-outline-secondary mt-2"
+                    onClick={() => getImage1()}
+                  >
+                    Download Graph
+                  </p>
+                )}
               </div>
               <div className="text-center" onClick={() => LogoutUser()}>
                 <img
@@ -464,10 +508,15 @@ const Dashboard = () => {
                   style={{
                     backgroundColor: "rgba(20, 19, 50, 1)",
                   }}
+                  ref={ref}
                 >
                   {/* -----------------------------------------------Graph1------------------------------------------------------- */}
 
-                  <div className="col-lg-5 col-md-6 col-sm-12 col-12">
+                  <div
+                    className="col-lg-5 col-md-6 col-sm-12 col-12"
+                    id="divfull"
+                    style={{ cursor: "pointer" }}
+                  >
                     <div
                       style={{
                         width: "100%",
@@ -651,9 +700,8 @@ const Dashboard = () => {
                               ]}
                               type={"day"}
                             ></Lines>
-                          ) : select === 2 ? (
-                            <TextChart></TextChart>
                           ) : (
+                            //  <p className="btn btn-primary" onClick={()=>getImage1(1)}>download</p>
                             handleExport()
                           )}
 
@@ -704,8 +752,6 @@ const Dashboard = () => {
                             <BarChart data={datetype} type={"date"}></BarChart>
                           ) : select === 1 ? (
                             <Lines data={datetype} type={"date"}></Lines>
-                          ) : select === 2 ? (
-                            <TextChart></TextChart>
                           ) : (
                             handleExport()
                           )}
@@ -787,8 +833,6 @@ const Dashboard = () => {
                                 data.dec,
                               ]}
                             ></Lines>
-                          ) : select === 2 ? (
-                            <TextChart></TextChart>
                           ) : (
                             handleExport(select)
                           )}
@@ -825,7 +869,7 @@ const Dashboard = () => {
                                   fontWeight: "bold",
                                 }}
                               >
-                                19
+                                {totalscan}
                               </p>
                             </div>
                           )}
@@ -956,14 +1000,6 @@ select1 === 0 ? (
                           <BarChart data={Browser} type={"browser"}></BarChart>
                         ) : select1 === 1 ? (
                           <Lines data={Browser} type={"browser"}></Lines>
-                        ) : select1 === 2 ? (
-                          <div
-                            style={{
-                              marginTop: -35,
-                            }}
-                          >
-                            <TextChart></TextChart>
-                          </div>
                         ) : (
                           handleExport()
                         )}
@@ -1201,8 +1237,6 @@ select1 === 0 ? (
                           <BarChart data={time} type={"time"}></BarChart>
                         ) : select2 === 1 ? (
                           <Lines data={time} type={"time"}></Lines>
-                        ) : select2 === 2 ? (
-                          <Lines data={[10, 30, 50, 70]}></Lines>
                         ) : (
                           handleExport()
                         )}
@@ -1359,8 +1393,6 @@ select1 === 0 ? (
                           <BarChart data={os} type={"os"}></BarChart>
                         ) : select3 === 1 ? (
                           <Lines data={os} type={"os"}></Lines>
-                        ) : select3 === 2 ? (
-                          <Lines data={[10, 30, 50, 70]}></Lines>
                         ) : (
                           handleExport()
                         )}

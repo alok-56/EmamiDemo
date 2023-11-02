@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -42,20 +42,8 @@ export const options = {
 };
 
 export function BarChart(props) {
-  // const timelabel = [];
-  // if (props.type === "time") {
-  //   Object.keys(props.data).forEach((item) => {
-  //     if (item >= 0 && item <= 23) {
-  //       const ampm = item >= 12 ? "PM" : "AM";
-  //       const formattedHours = item % 12 || 12; // Convert 0 to 12
-  //       const minutes = new Date().getMinutes();
-  //       const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-  //       timelabel.push(`${formattedHours}:${formattedMinutes} ${ampm}`);
-  //     }
-  //   });
-  // }
-  // console.log(timelabel);
-
+ 
+ 
   const labels =
     props.type === "day"
       ? ["sunday", "monday", "tuesday", "thursday", "Friday", "satarday"]
@@ -94,5 +82,9 @@ export function BarChart(props) {
       },
     ],
   };
-  return <Bar options={options} data={data} />;
+  return (
+    <div>
+      <Bar id="bar" options={options} data={data} />
+    </div>
+  );
 }

@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Table from "react-bootstrap/Table";
 
 const TextChart = () => {
+  
   return (
     <div style={{ width: "100%", color: "#fff", marginTop: 25 }}>
-      <div>
+      <div id="head">
         <div
           style={{
             width: 300,
