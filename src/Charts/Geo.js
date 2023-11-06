@@ -60,7 +60,8 @@ const GeoGraph = (props) => {
     value,
   }));
 
-  const cityArray=Object.entries(props.map).map(([key, value]) => ({
+  
+  const cityArray = Object.entries(props.map).map(([key, value]) => ({
     id: key,
     value,
   }));
@@ -84,7 +85,7 @@ const GeoGraph = (props) => {
     .domain(data.map((d) => d.value))
     .range(COLOR_RANGE);
 
-  const onMouseEnter = (geo, current, value,city = { value: "NA" }) => {
+  const onMouseEnter = (geo, current, value, city = { value: "NA" }) => {
     return () => {
       setTooltipContent(`${geo.properties.name} :- ${value} Scans`);
     };
@@ -120,18 +121,18 @@ const GeoGraph = (props) => {
                 }
               });
               let city;
-              cityArray.map((item)=>{
-                if(value===item.value){
-                  city=item.id
+              cityArray.map((item) => {
+                if (value === item.value) {
+                  city = item.id;
                 }
-              })
+              });
               return (
                 <Geography
                   key={geo.rsmKey}
                   geography={geo}
                   fill={current ? colorScale(current.value) : DEFAULT_COLOR}
                   style={geographyStyle}
-                  onMouseEnter={onMouseEnter(geo, current, value,city)}
+                  onMouseEnter={onMouseEnter(geo, current, value, city)}
                   onMouseLeave={onMouseLeave}
                 />
               );

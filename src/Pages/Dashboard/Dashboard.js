@@ -69,7 +69,7 @@ const Dashboard = () => {
   const [time, setTime] = useState("");
   const [document, setDocument] = useState("");
   const [maps, setMap] = useState("");
-  const [city,setCity]=useState("")
+  const [city, setCity] = useState("");
 
   const doc = [];
   const doc2 = [];
@@ -79,6 +79,7 @@ const Dashboard = () => {
   const browsers = [];
   const devices = [];
   const map = [];
+  const State=[]
 
   const navigate = useNavigate();
   const LogoutUser = () => {
@@ -101,6 +102,7 @@ const Dashboard = () => {
     browsers.push(Browser);
     devices.push(device);
     map.push(maps);
+    State.push(city)
 
     const workbook = XLSX.utils.book_new();
     const worksheet = XLSX.utils.json_to_sheet(doc);
@@ -111,6 +113,7 @@ const Dashboard = () => {
     const worksheet6 = XLSX.utils.json_to_sheet(browsers);
     const worksheet7 = XLSX.utils.json_to_sheet(devices);
     const worksheet8 = XLSX.utils.json_to_sheet(map);
+    const worksheet9 = XLSX.utils.json_to_sheet(State);
 
     // Add the worksheet to the workbook
     XLSX.utils.book_append_sheet(workbook, worksheet, "Month");
@@ -121,6 +124,7 @@ const Dashboard = () => {
     XLSX.utils.book_append_sheet(workbook, worksheet6, "Browser");
     XLSX.utils.book_append_sheet(workbook, worksheet7, "Device");
     XLSX.utils.book_append_sheet(workbook, worksheet8, "City");
+    XLSX.utils.book_append_sheet(workbook, worksheet9, "State");
 
     // Create a blob from the workbook
     XLSX.writeFile(workbook, "MyEcel.xlsx");
@@ -168,7 +172,7 @@ const Dashboard = () => {
         setLoad(false);
         setDocument(res.result);
         setMap(res.map);
-        setCity(res.citycode)
+        setCity(res.citycode);
       })
       .catch((err) => {
         setLoad(false);
@@ -386,16 +390,16 @@ const Dashboard = () => {
                 {/* ----------------------------Input Box---------------------------- */}
                 <div className="mt-4" style={{ width: "80%" }}>
                   <div className="row ">
-                    <div className="col-lg-3 col-md-4 col-sm-6 col-6 ">
-                      <Form.Control
+                    {/* <div className="col-lg-3 col-md-4 col-sm-6 col-6 ">
+                       <Form.Control
                         style={{
                           backgroundColor: "#fff",
                           color: "#000",
                           width: "100%",
                         }}
                         placeholder="Select QR Code"
-                      />
-                    </div>
+                      /> 
+                    </div> */}
 
                     <div className="col-lg-3 col-md-4 col-sm-6 col-6">
                       <Form.Select
@@ -414,7 +418,7 @@ const Dashboard = () => {
                         <option value="Creme">Creme</option>
                       </Form.Select>
                     </div>
-                    <div className="col-lg-3 col-md-4 col-sm-6 col-6 mt-lg-0 mt-md-0 mt-sm-3 mt-3">
+                    <div className="col-lg-3 col-md-4 col-sm-6 col-6 mt-lg-0 mt-md-0 mt-sm-0 mt-0">
                       <RangePicker
                         style={{
                           backgroundColor: "#fff",
@@ -455,6 +459,16 @@ const Dashboard = () => {
                         </p>
                       )}
                     </div>
+                    {/* <div className="col-lg-3 col-md-4 col-sm-6 col-6 ">
+                       <Form.Control
+                        style={{
+                          backgroundColor: "#fff",
+                          color: "#000",
+                          width: "100%",
+                        }}
+                        placeholder="Select QR Code"
+                      /> 
+                    </div> */}
                   </div>
                 </div>
 
@@ -1109,10 +1123,10 @@ select1 === 0 ? (
                         </div>
                       </div>
                       <div
-                        // style={{
-                        //   height: "100%",
-                        //   padding: 5,
-                        // }}
+                      // style={{
+                      //   height: "100%",
+                      //   padding: 5,
+                      // }}
                       >
                         <GeoGraph data={city} map={maps}></GeoGraph>
                       </div>
